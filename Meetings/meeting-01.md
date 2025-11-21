@@ -6,6 +6,7 @@
 | Chair | Justin Romeijn |
 | Minute Taker | Jayden Wong |
 | Attendees : | Andrei Bălăiţă, Andrei Ianuc, Aleksander Klik, Justin Romeijn, Sven van Dalen, Jayden Wong |
+
 Agenda Items :
 - Opening by chair (1 min )
 - Check - in : How is everyone doing? (1 min )
