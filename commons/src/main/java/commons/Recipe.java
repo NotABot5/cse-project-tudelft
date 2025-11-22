@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
@@ -21,6 +22,9 @@ public class Recipe {
     @ElementCollection
     @OrderColumn(name = "step")
     public List<String> preparation = new ArrayList<>();
+
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+    public Set<IngredientUsage> ingredients;
 
     public Recipe(String name, String lang, List<String> preparation)
     {

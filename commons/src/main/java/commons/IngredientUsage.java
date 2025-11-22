@@ -5,34 +5,33 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.util.Set;
-
 import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
 @Entity
-public class Ingredient {
+public class IngredientUsage {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public long id;
 
-    public String name;
-    public double protein;
-    public double fat;
-    public double carbs;
+    @ManyToOne
+    public Recipe recipe;
+    @ManyToOne
+    public Ingredient ingredient;
+    public int amount;
 
-    @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL, orphanRemoval = true)
-    public Set<IngredientUsage> usedInRecipes;
+    //This may or may not be changed in the future to a different structure
+    public String unit;
 
-    public Ingredient(String name, double protein, double fat, double carbs)
+    public IngredientUsage(Recipe recipe, Ingredient ingredient, int amount, String unit)
     {
-        this.name = name;
-        this.protein = protein;
-        this.fat = fat;
-        this.carbs = carbs;
+        this.recipe = recipe;
+        this.ingredient = ingredient;
+        this.amount = amount;
+        this.unit = unit;
     }
 
     @SuppressWarnings("unused")
-    private Ingredient() {}
+    private IngredientUsage() {}
 
     @Override
     public boolean equals(Object obj) {
