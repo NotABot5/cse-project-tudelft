@@ -30,4 +30,15 @@ class RecipeTest {
         assertNotEquals(testRecipe.hashCode(), testRecipeNotEqual.hashCode());
         assertNotEquals(testRecipe, testRecipeNotEqual);
     }
+
+    @Test
+    void testToString() {
+        System.out.println(testRecipe.toString());
+        String toStringRes = testRecipe.toString();
+        assertTrue(toStringRes.contains("Recipe"));
+        assertTrue(toStringRes.contains("lang=en"));
+        assertTrue(toStringRes.contains("name=test"));
+        assertTrue(toStringRes.contains("preparation=[a]"));
+        assertTrue(toStringRes.contains("ingredients"));
+    }
 }

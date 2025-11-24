@@ -28,4 +28,14 @@ class IngredientTest {
         assertNotEquals(testIngredient.hashCode(), testIngredientNotEqual.hashCode());
         assertNotEquals(testIngredient, testIngredientNotEqual);
     }
+
+    @Test
+    void testToString() {
+        String toStringRes = testIngredient.toString();
+        assertTrue(toStringRes.contains("Ingredient"));
+        assertTrue(toStringRes.contains("carbs=1.0"));
+        assertTrue(toStringRes.contains("fat=1.0"));
+        assertTrue(toStringRes.contains("protein=1.0"));
+        assertTrue(toStringRes.contains("name=test"));
+    }
 }
