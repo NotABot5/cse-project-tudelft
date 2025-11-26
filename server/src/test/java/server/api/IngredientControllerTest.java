@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class IngredientControllerTest {
     private IngredientController ingredientController;
     private Ingredient ingredient;
+    private Ingredient ingredientCopy;
 
     @Autowired
     private IngredientRepository tester;
@@ -26,6 +27,7 @@ class IngredientControllerTest {
     @BeforeEach
     public void setup() {
         ingredient = new Ingredient("Beef", 20, 10, 0);
+        ingredientCopy = new Ingredient("Beef", 20, 10, 0);
         ingredientController = new IngredientController(new IngredientService(tester));
         tester.save(ingredient);
     }
@@ -38,5 +40,13 @@ class IngredientControllerTest {
     @Test
     public void fetchIngredientWithIDTest() {
         assertEquals(ingredient, ingredientController.fetchIngredientWithID(ingredient.id).getBody());
+    }
+
+    @Test
+    public void addDeleteIngredientTest() {
+        assertTrue(ingredientController.addIngredient(ingredientCopy));
+        assertEquals(2, ingredientController.fetchAllIngredients().size());
+        assertTrue(ingredientController.deleteIngredient(ingredientCopy));
+        assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients());
     }
 }
