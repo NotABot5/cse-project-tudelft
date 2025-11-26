@@ -33,6 +33,36 @@ public class IngredientUsage {
     @SuppressWarnings("unused")
     private IngredientUsage() {}
 
+    public long getId() {
+        return id;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+
+    public Ingredient getIngredient() {
+        return ingredient;
+    }
+
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
