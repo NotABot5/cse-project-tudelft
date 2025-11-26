@@ -54,4 +54,48 @@ public class IngredientController {
     public boolean deleteIngredient(@RequestBody Ingredient ingredient) {
         return ingredientService.deleteIngredient(ingredient);
     }
+
+    /**
+     * Update name of ingredient with an updated ingredient
+     * @param updatedIngredient ingredient to replace the old value with
+     */
+    @PutMapping("/name")
+    public void changeName(@RequestBody Ingredient updatedIngredient) {
+        if (updatedIngredient != null) {
+            ingredientService.changeName(updatedIngredient, updatedIngredient.getName());
+        }
+    }
+
+    /**
+     * Update fat in ingredient with an updated ingredient
+     * @param updatedIngredient ingredient to replace the old value with
+     */
+    @PutMapping("/fat")
+    public void changeFat(@RequestBody Ingredient updatedIngredient) {
+        if (updatedIngredient != null) {
+            ingredientService.changeFat(updatedIngredient, updatedIngredient.getFat());
+        }
+    }
+
+    /**
+     * Update carbs in ingredient with an updated ingredient
+     * @param updatedIngredient ingredient to replace the old value with
+     */
+    @PutMapping("/carbs")
+    public void changeCarbs(@RequestBody Ingredient updatedIngredient) {
+        if (updatedIngredient != null) {
+            ingredientService.changeCarbs(updatedIngredient, updatedIngredient.getCarbs());
+        }
+    }
+
+    /**
+     * Update protein in ingredient with an updated ingredient
+     * @param updatedIngredient ingredient to replace the old value with
+     */
+    @PutMapping("/protein")
+    public void changeProtein(@RequestBody Ingredient updatedIngredient) {
+        if (updatedIngredient != null) {
+            ingredientService.changeProtein(updatedIngredient, updatedIngredient.getProtein());
+        }
+    }
 }

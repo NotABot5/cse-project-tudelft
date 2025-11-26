@@ -49,4 +49,35 @@ class IngredientControllerTest {
         assertTrue(ingredientController.deleteIngredient(ingredientCopy));
         assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients());
     }
+
+    @Test
+    public void updateNameTest() {
+        ingredient.name = "Pork";
+        ingredientController.changeName(ingredient);
+        assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients());
+    }
+
+
+    @Test
+    public void updateCarbsTest() {
+        ingredient.carbs = 100;
+        ingredientController.changeCarbs(ingredient);
+        assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients());
+    }
+
+
+    @Test
+    public void updateProteinTest() {
+        ingredient.protein = 100;
+        ingredientController.changeProtein(ingredient);
+        assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients());
+    }
+
+
+    @Test
+    public void updateFatTest() {
+        ingredient.fat = 100;
+        ingredientController.changeFat(ingredient);
+        assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients());
+    }
 }
