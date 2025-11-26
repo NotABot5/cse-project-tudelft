@@ -4,6 +4,9 @@ import commons.Ingredient;
 import org.springframework.stereotype.Service;
 import server.database.IngredientRepository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class IngredientService {
     public final IngredientRepository ingredientRepository;
@@ -98,4 +101,19 @@ public class IngredientService {
         }
     }
 
+    /**
+     * Fetches all ingredients from database
+     * @return list of all ingredients
+     */
+    public List<Ingredient> fetchAllIngredients() {
+        return ingredientRepository.findAll();
+    }
+
+    /**
+     * Fetches an ingredient from database by their ID
+     * @return optional of the fetched ingredient if ID present, empty optional otherwise
+     */
+    public Optional<Ingredient> fetchIngredientByID(long id) {
+        return ingredientRepository.findById(id);
+    }
 }
