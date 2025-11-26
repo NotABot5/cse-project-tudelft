@@ -85,4 +85,17 @@ public class IngredientService {
         }
     }
 
+    /**
+     * Changes name of ingredient to new value specified, given that it is not null
+     * Produces NoSuchElementException in case ingredient with id does not exist
+     * @param ingredient ingredient to be changed
+     * @param newName new name of ingredient
+     */
+    public void changeName(Ingredient ingredient, String newName) {
+        if (ingredient != null && newName != null) {
+            Ingredient toBeChanged = ingredientRepository.findById(ingredient.getId()).orElseThrow();
+            toBeChanged.setName(newName);
+        }
+    }
+
 }

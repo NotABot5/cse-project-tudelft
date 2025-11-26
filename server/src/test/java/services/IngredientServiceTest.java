@@ -68,4 +68,12 @@ public class IngredientServiceTest {
         Ingredient found = tester.findById(ingredient.getId()).get();
         assertEquals(1234, found.getCarbs());
     }
+
+    @Test
+    public void changeNameTest() {
+        ingredientService.addIngredient(ingredient);
+        ingredientService.changeName(ingredient, "Pork");
+        Ingredient found = tester.findById(ingredient.getId()).get();
+        assertEquals("Pork", found.getName());
+    }
 }
