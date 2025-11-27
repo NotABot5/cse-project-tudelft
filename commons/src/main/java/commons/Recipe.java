@@ -50,4 +50,21 @@ public class Recipe {
     public String toString() {
         return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
     }
-}
+
+    public Long getId()   {  return id; }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getLang() { return lang; }
+
+    public void setLang(String lang) { this.lang = lang; }
+
+    public List<String> getPreparation() { return preparation; }
+
+    public void setPreparation(List<String> preparation) { this.preparation = preparation; }
+    }
+
