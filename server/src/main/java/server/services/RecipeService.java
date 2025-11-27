@@ -21,7 +21,7 @@ public class RecipeService {
      * @param recipe the recipe that is being checked
      * @throws IllegalArgumentException if recipe is null
      */
-    private void RecipeNotNull(Recipe recipe) {
+    private void recipeNotNull(Recipe recipe) {
         if  (recipe == null) {
             throw new IllegalArgumentException("Recipe cannot be null");
         }
@@ -29,11 +29,11 @@ public class RecipeService {
     }
     /**
      * Makes sure that the Preparation steps are not null
-     * @param recipe the recipe that is being checked
+     * @param preparation the preparations that is being checked
      */
-    private void PreparationsListNotNull(Recipe recipe) {
-        if (recipe == null) {
-            throw new IllegalArgumentException("Preparations steps cannot be null");
+    private void preparationListNotNull(List<String> preparation) {
+        if (preparation == null) {
+            throw new IllegalArgumentException("Preparation steps cannot be null");
         }
     }
 
@@ -43,7 +43,7 @@ public class RecipeService {
      * @return true if recipe was added successfully
      */
     public boolean addRecipe(Recipe recipe) {
-        RecipeNotNull(recipe);
+        recipeNotNull(recipe);
 
         if (!recipeRepository.existsById(recipe.getId())) {
             recipeRepository.save(recipe);
@@ -59,7 +59,7 @@ public class RecipeService {
      * @return true if recipe existed and was deleted successfully
      */
     public boolean deleteRecipe(Recipe recipe) {
-        RecipeNotNull(recipe);
+        recipeNotNull(recipe);
 
         if (recipeRepository.existsById(recipe.getId())) {
             recipeRepository.deleteById(recipe.getId());
@@ -75,7 +75,7 @@ public class RecipeService {
      */
 
     public void changeLang(Recipe recipe, String newLang) {
-        RecipeNotNull(recipe);
+        recipeNotNull(recipe);
 
         if (newLang != null) {
             Recipe toBeChanged = recipeRepository.findById(recipe.getId()).orElseThrow();
@@ -90,7 +90,7 @@ public class RecipeService {
      * @param newName the new name
      */
     public void changeName(Recipe recipe, String newName) {
-        RecipeNotNull(recipe);
+        recipeNotNull(recipe);
 
         if (newName != null) {
             Recipe toBeChanged = recipeRepository.findById(recipe.getId()).orElseThrow();
@@ -104,14 +104,14 @@ public class RecipeService {
      * @param newPreparation the preparation steps
      */
     public void changePreparation(Recipe recipe, List<String> newPreparation) {
-        RecipeNotNull(recipe);
-        PreparationsListNotNull(recipe);
+        recipeNotNull(recipe);
+        preparationListNotNull(newPreparation);
 
-        if (newPreparation != null) {
+
             Recipe toBeChanged = recipeRepository.findById(recipe.getId()).orElseThrow();
             toBeChanged.setPreparation(newPreparation);
             recipeRepository.save(toBeChanged);
-        }
+
     }
 
     /**
