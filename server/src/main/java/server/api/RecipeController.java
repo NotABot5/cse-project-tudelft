@@ -1,22 +1,6 @@
-/*
- * Copyright 2021 Delft University of Technology
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package server.api;
 
 import java.util.List;
-import java.util.Random;
 
 import io.micrometer.common.util.StringUtils;
 import org.springframework.http.ResponseEntity;
@@ -29,11 +13,9 @@ import server.database.RecipeRepository;
 @RequestMapping("/api/recipes")
 public class RecipeController {
 
-    private final Random random;
     private final RecipeRepository repo;
 
-    public RecipeController(Random random, RecipeRepository repo) {
-        this.random = random;
+    public RecipeController(RecipeRepository repo) {
         this.repo = repo;
     }
 
@@ -61,13 +43,6 @@ public class RecipeController {
 
         Recipe saved = repo.save(recipe);
         return ResponseEntity.ok(saved);
-    }
-
-    @GetMapping("rnd")
-    public ResponseEntity<Recipe> getRandom() {
-        var quotes = repo.findAll();
-        var idx = random.nextInt((int) repo.count());
-        return ResponseEntity.ok(quotes.get(idx));
     }
 
     @PutMapping("/{id}")

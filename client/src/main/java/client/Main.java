@@ -1,6 +1,5 @@
 package client;
 
-import client.utils.ServerUtils;
 import commons.Recipe;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -19,14 +18,14 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         var recipeListView = new ListView<Recipe>();
 
         List<Recipe> fakeRecipes = new ArrayList<>();
         fakeRecipes.add(new Recipe("Spaghetti Carbonara", "en", new ArrayList<>()));
         fakeRecipes.add(new Recipe("Chicken Noodle Soup", "en", new ArrayList<>()));
 
-        recipeListView.setItems(FXCollections.observableArrayList(ServerUtils.getRecipes()));
+        recipeListView.getItems().setAll(FXCollections.observableArrayList(fakeRecipes));
 
 
         var mainLayout = new VBox();
