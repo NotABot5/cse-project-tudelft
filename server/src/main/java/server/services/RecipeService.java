@@ -4,6 +4,7 @@ import commons.Recipe;
 import org.springframework.stereotype.Service;
 import server.database.RecipeRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -99,7 +100,7 @@ public class RecipeService {
         }
     }
     /**
-     * Changes the steps of the preparation of a recipe, if they are not null
+     * Changes the steps of the preparation of a recipe, if they are not null and it exists
      * @param recipe recipe of whose preparation steps will be changed
      * @param newPreparation the preparation steps
      */
@@ -109,7 +110,7 @@ public class RecipeService {
 
 
             Recipe toBeChanged = recipeRepository.findById(recipe.getId()).orElseThrow();
-            toBeChanged.setPreparation(newPreparation);
+            toBeChanged.setPreparation(new ArrayList<>(newPreparation));
             recipeRepository.save(toBeChanged);
 
     }
