@@ -1,9 +1,11 @@
 package Client;
 
+import commons.Ingredient;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -13,6 +15,10 @@ public class MainLecture extends Application {
     @FXML private TextField fieldFat;
     @FXML private TextField fieldCarbs;
     @FXML private TextField fieldProtein;
+    @FXML private ChoiceBox<Ingredient> ingredientChoiceBox;
+
+
+
 
     private String oldName, oldFat, oldCarbs, oldProtein;
 
@@ -43,7 +49,7 @@ public class MainLecture extends Application {
 
     @FXML
     public void onEdit() {
-        // Oude waarden opslaan
+
         oldName = fieldName.getText();
         oldFat = fieldFat.getText();
         oldCarbs = fieldCarbs.getText();
@@ -54,7 +60,7 @@ public class MainLecture extends Application {
 
     @FXML
     public void onSave() {
-        // waarden zijn nu al in de textfields → klaar
+
         System.out.println("Saved:");
         System.out.println("Name: " + fieldName.getText());
         System.out.println("Fat: " + fieldFat.getText());

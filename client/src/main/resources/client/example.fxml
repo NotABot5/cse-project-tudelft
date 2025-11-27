@@ -19,7 +19,7 @@
 
     <children>
         <MenuBar VBox.vgrow="NEVER">
-            <!-- je bestaande menu's blijven hier ongewijzigd -->
+
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
@@ -67,7 +67,7 @@
                     </font>
                 </Label>
 
-                <!-- Velden -->
+
                 <Label layoutX="50.0" layoutY="60.0" text="Name:"/>
                 <TextField fx:id="fieldName" layoutX="150.0" layoutY="60.0" prefWidth="150.0"/>
 
@@ -80,11 +80,14 @@
                 <Label layoutX="50.0" layoutY="180.0" text="Protein:"/>
                 <TextField fx:id="fieldProtein" layoutX="150.0" layoutY="180.0" prefWidth="150.0"/>
 
-                <!-- Knoppen -->
+
                 <Button fx:id="Button_Edit" layoutX="50.0" layoutY="230.0" text="Edit" onAction="#onEdit"/>
                 <Button layoutX="120.0" layoutY="230.0" text="Save" onAction="#onSave"/>
                 <Button layoutX="190.0" layoutY="230.0" text="Cancel" onAction="#onCancel"/>
                 <Button layoutX="270.0" layoutY="230.0" text="Clear" onAction="#onClear"/>
+
+                
+
 
             </children>
         </AnchorPane>
