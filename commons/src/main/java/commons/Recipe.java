@@ -30,7 +30,7 @@ public class Recipe {
     {
         this.name = name;
         this.lang = lang;
-        this.preparation = preparation;
+        this.preparation = new ArrayList<>(preparation);
     }
 
     @SuppressWarnings("unused")
@@ -65,6 +65,7 @@ public class Recipe {
 
     public List<String> getPreparation() { return preparation; }
 
-    public void setPreparation(List<String> preparation) { this.preparation = preparation; }
+    public void setPreparation(List<String> preparation) { this.preparation =
+            new ArrayList <>(preparation); }
     }
 
