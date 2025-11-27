@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 package server;
-import commons.IngredientUI;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,19 +21,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
 @EntityScan(basePackages = { "commons", "server" })
-public class Main extends Application{
-    @Override
-    public void start(Stage primaryStage) {
-        IngredientUI ingredientUI = new IngredientUI();
-
-        Scene scene = new Scene(ingredientUI.getRoot(), 500, 400);
-
-        primaryStage.setTitle("Ingredient UI");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
+public class Main {
 
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
+
     }
 }
