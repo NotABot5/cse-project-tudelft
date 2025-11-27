@@ -11,20 +11,26 @@ import javafx.stage.Stage;
 
 public class MainLecture extends Application {
 
-    @FXML private TextField fieldName;
-    @FXML private TextField fieldFat;
-    @FXML private TextField fieldCarbs;
-    @FXML private TextField fieldProtein;
-    @FXML private ChoiceBox<Ingredient> ingredientChoiceBox;
+    @FXML protected TextField fieldName;
+    @FXML protected TextField fieldFat;
+    @FXML protected TextField fieldCarbs;
+    @FXML protected TextField fieldProtein;
+    @FXML protected ChoiceBox<Ingredient> ingredientChoiceBox;
 
 
 
 
-    private String oldName, oldFat, oldCarbs, oldProtein;
+    protected String oldName, oldFat, oldCarbs, oldProtein;
 
     public static void main(String[] args) {
         launch(args);
     }
+    /**
+     * Loads the FXML layout and shows the main application window.
+     *
+     * @param primaryStage the primary JavaFX stage
+     * @throws Exception if the FXML file cannot be loaded
+     */
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -34,18 +40,31 @@ public class MainLecture extends Application {
         primaryStage.setTitle("Ingredient Editor");
         primaryStage.show();
     }
+    /**
+     * Called automatically after the FXML has been loaded.
+     * Sets all TextFields to non-editable initially.
+     */
 
     @FXML
     public void initialize() {
         setEditable(false);
     }
+    /**
+     * Sets all TextFields to editable or read-only.
+     *
+     * @param value true to make editable, false to make read-only
+     */
 
-    private void setEditable(boolean value) {
+    protected void setEditable(boolean value) {
         fieldName.setEditable(value);
         fieldFat.setEditable(value);
         fieldCarbs.setEditable(value);
         fieldProtein.setEditable(value);
     }
+    /**
+     * Starts the editing mode.
+     * Saves the current field values to allow restoring them if cancelled.
+     */
 
     @FXML
     public void onEdit() {
@@ -57,6 +76,10 @@ public class MainLecture extends Application {
 
         setEditable(true);
     }
+    /**
+     * Saves the changes (currently prints them to the console)
+     * and sets the fields back to read-only.
+     */
 
     @FXML
     public void onSave() {
@@ -69,6 +92,9 @@ public class MainLecture extends Application {
 
         setEditable(false);
     }
+    /**
+     * Cancels the current edits and restores the fields to their previous values.
+     */
 
     @FXML
     public void onCancel() {
@@ -80,6 +106,9 @@ public class MainLecture extends Application {
 
         setEditable(false);
     }
+    /**
+     * Clears all TextFields.
+     */
 
     @FXML
     public void onClear() {
