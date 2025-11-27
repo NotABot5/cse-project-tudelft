@@ -41,4 +41,35 @@ class RecipeTest {
         assertTrue(toStringRes.contains("preparation=[a]"));
         assertTrue(toStringRes.contains("ingredients"));
     }
-}
+    @Test
+    void testGetId(){
+        assertNotNull(testRecipe.getId());
+    }
+    @Test
+    void testGetName(){
+        assertEquals("test", testRecipe.getName());
+    }
+    @Test
+    void testSetName(){
+        testRecipe.setName("test");
+        assertEquals("test", testRecipe.getName());
+    }
+    @Test
+    void testGetLang(){
+        assertEquals("en", testRecipe.getLang());
+    }
+    @Test
+    void testSetLang(){
+        testRecipe.setLang("en");
+        assertEquals("en", testRecipe.getLang());
+    }
+    @Test
+    void testGetPreparation(){
+        assertEquals(List.of("a"), testRecipe.getPreparation());
+    }
+    @Test
+    void testSetPreparation(){
+        testRecipe.setPreparation(List.of("a"));
+        assertEquals(List.of("a"), testRecipe.getPreparation());
+    }
+    }
