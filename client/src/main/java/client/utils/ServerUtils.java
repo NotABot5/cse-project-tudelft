@@ -11,16 +11,23 @@ import jakarta.ws.rs.core.GenericType;
 import java.util.List;
 
 public class ServerUtils {
-    private static final String BASE_URL = "http://localhost:8080/api/";
+    private static final String SERVER = "http://localhost:8080/";
 
     public static List<Recipe> getRecipes() {
         try (var client = ClientBuilder.newClient(new ClientConfig())){
-                return client.target(BASE_URL)
+                return client.target(SERVER)
                 .path("api/recipes")
                 .request(APPLICATION_JSON)
                 .get(new GenericType<>() {
                 });
 
+        }
+    }
+
+    public static List<String> getRecipeNames() {
+        try (var client = ClientBuilder.newClient(new ClientConfig())) {
+            return client.target(SERVER).path("api/recipes/names")
+                    .request(APPLICATION_JSON).get(new GenericType<List<String>>() {});
         }
     }
 }

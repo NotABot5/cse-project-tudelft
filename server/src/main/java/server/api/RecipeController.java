@@ -24,6 +24,11 @@ public class RecipeController {
         return repo.findAll();
     }
 
+    @GetMapping("/names")
+    public List<String> getRecipeNames() {
+        return repo.findAll().stream().map(r -> r.name).toList();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Recipe> getById(@PathVariable("id") long id) {
         if (id < 0 || !repo.existsById(id)) {
