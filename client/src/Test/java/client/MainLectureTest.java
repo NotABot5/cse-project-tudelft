@@ -1,4 +1,4 @@
-package Client;
+package client;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.TextField;
@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MainLectureTest {
 
-    private MainLecture controller;
+    private Main controller;
     @BeforeAll
     static void initJFX() {
         new JFXPanel(); // start JavaFX runtime
@@ -19,7 +19,7 @@ class MainLectureTest {
 
     @BeforeEach
     void setUp() {
-        controller = new MainLecture();
+        controller = new Main();
 
         controller.fieldName = new TextField();
         controller.fieldFat = new TextField();

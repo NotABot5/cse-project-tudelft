@@ -1,4 +1,4 @@
-package Client;
+package client;
 
 import commons.Ingredient;
 import javafx.application.Application;
@@ -9,7 +9,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class MainLecture extends Application {
+public class Main extends Application {
 
     @FXML protected TextField fieldName;
     @FXML protected TextField fieldFat;
