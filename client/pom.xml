@@ -102,16 +102,20 @@
 				<artifactId>javafx-maven-plugin</artifactId>
 				<version>0.0.8</version>
 				<configuration>
-					<mainClass>client.Main</mainClass>
+					<mainClass>client.MainLecture</mainClass>
+                    <options>
+                        <option>--enable-native-access=javafx.graphics</option>
+                </options>
 				</configuration>
+
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>3.3.0</version>
 				<configuration>
-					<configLocation>../checkstyle.xml</configLocation>
-					<sourceDirectories>${project.basedir}</sourceDirectories>
+                    <configLocation>checkstyle.xml</configLocation>
+                    <sourceDirectories>${project.basedir}</sourceDirectories>
 					<includes>src/**/*.java,**/*.xml,**/*.yml</includes>
 					<excludes>**/target/**</excludes>
 				</configuration>
