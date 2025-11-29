@@ -18,7 +18,6 @@
       fx:controller="client.Main">
 
     <children>
-
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <children>
                 <Label alignment="CENTER" layoutX="155.0" layoutY="20.0" text="Nutrition Editor" textAlignment="CENTER" textFill="#9f9f9f">
