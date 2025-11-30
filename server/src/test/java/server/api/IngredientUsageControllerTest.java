@@ -12,8 +12,11 @@ import server.Main;
 import server.database.IngredientRepository;
 import server.database.IngredientUsageRepository;
 import server.database.RecipeRepository;
+import server.services.IngredientUsageService;
 
 import java.util.List;
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
@@ -29,6 +32,7 @@ class IngredientUsageControllerTest {
     private IngredientRepository ingredientRepository;
     @Autowired
     private RecipeRepository recipeRepository;
+    private IngredientUsage tempIngUsage;
 
     @BeforeEach
     public void setup() {
@@ -38,7 +42,14 @@ class IngredientUsageControllerTest {
         ingredientRepository.save(ing);
         recipeRepository.save(rec);
         tester.save(testIngUsage);
-        ingredientUsageController = new IngredientUsageController(tester);
+        IngredientUsageService ingredientUsageService = new IngredientUsageService(tester);
+        ingredientUsageController = new IngredientUsageController(tester, ingredientUsageService);
+        tempIngUsage = new IngredientUsage(
+                new Recipe("Test Recipe", "en", List.of("Step 1", "Step 2")),
+                new Ingredient("Beef", 20, 10, 0),
+                5,
+                "g"
+        );
     }
 
     @Test
@@ -54,5 +65,22 @@ class IngredientUsageControllerTest {
     @Test
     public void testFetchRecipeCount() {
         assertEquals(1, ingredientUsageController.fetchRecipeCount(ing.id));
+    }
+
+    @Test
+    public void testAddIngredientUsage() {
+        assertTrue(ingredientUsageController.addIngredientUsage(tempIngUsage));
+        Optional<IngredientUsage> res = tester.findById(tempIngUsage.getId());
+        assertTrue(res.isPresent());
+        assertEquals(tempIngUsage, res.get());
+        tester.delete(tempIngUsage);
+    }
+
+    @Test
+    public void testDeleteIngredientUsage() {
+        IngredientUsage toDelete = new IngredientUsage(rec, ing, 5, "g");
+        tester.save(toDelete);
+        assertTrue(ingredientUsageController.deleteIngredientUsage(toDelete));
+        assertEquals(List.of(testIngUsage), tester.findAll());
     }
 }

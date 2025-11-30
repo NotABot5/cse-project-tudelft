@@ -2,10 +2,9 @@ package server.api;
 
 import commons.IngredientUsage;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import server.database.IngredientUsageRepository;
+import server.services.IngredientUsageService;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,9 +13,13 @@ import java.util.Objects;
 @RequestMapping("/api/ingredientUsage")
 public class IngredientUsageController {
     public final IngredientUsageRepository ingredientUsageRepository;
+    public final IngredientUsageService ingredientUsageService;
 
-    public IngredientUsageController(IngredientUsageRepository ingredientUsageRepository) {
+    public IngredientUsageController(
+            IngredientUsageRepository ingredientUsageRepository, IngredientUsageService ingredientUsageService
+    ) {
         this.ingredientUsageRepository = ingredientUsageRepository;
+        this.ingredientUsageService = ingredientUsageService;
     }
 
     /**
@@ -48,5 +51,25 @@ public class IngredientUsageController {
         return ingredientUsageRepository.findAll().stream().filter(
                 (IngredientUsage ing) -> ing.getIngredient().getId() == id
         ).count();
+    }
+
+    /**
+     * Adds a new ingredient usage to the database
+     * @param ingredientUsage the ingredient usage to add
+     * @return true if added successfully, false otherwise
+     */
+    @PostMapping("/")
+    public boolean addIngredientUsage(@RequestBody IngredientUsage ingredientUsage) {
+        return ingredientUsageService.addIngredientUsage(ingredientUsage);
+    }
+
+    /**
+     * Deletes an ingredient usage from the database
+     * @param ingredientUsage the ingredient usage to delete
+     * @return true if deleted successfully, false otherwise
+     */
+    @DeleteMapping("/")
+    public boolean deleteIngredientUsage(@RequestBody IngredientUsage ingredientUsage) {
+        return ingredientUsageService.deleteIngredientUsage(ingredientUsage);
     }
 }
