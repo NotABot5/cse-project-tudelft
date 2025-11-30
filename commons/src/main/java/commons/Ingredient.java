@@ -10,7 +10,7 @@ import java.util.Set;
 import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
 @Entity
-public class Ingredient {
+public class Ingredient implements Comparable<Ingredient> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public long id;
@@ -83,5 +83,25 @@ public class Ingredient {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
+    }
+
+    /**
+     * Implements compareTo to make Ingredients comparable
+     * Compares Ingredients by name
+     * @param other the Ingredient with which is compared.
+     * @return 0 if Ingredients are "equal" in terms of name, -1 if other has a greater value or 1 if other has a smaller value
+     */
+    @Override
+    public int compareTo(Ingredient other) {
+        if(getName() == null) {
+            throw new NullPointerException("Name of ingredient (used to call comparing method) is null");
+        }
+        if(other.getName() == null) {
+            throw new NullPointerException("Name of ingredient (given as argument in comparing method) is null");
+        }
+        int indicatorValue = getName().compareTo(other.getName());
+        if (indicatorValue < 0) {return(-1);}
+        else if (indicatorValue > 0) {return(1);}
+        else {return(0);}
     }
 }
