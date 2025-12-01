@@ -33,31 +33,47 @@ public class ServerUtils {
         }
     }
 
-        public Recipe addRecipe(Recipe recipe) {
-            try (var client = ClientBuilder.newClient(new ClientConfig())) {
-                return client.target(SERVER).path("api/recipes")
-                        .request(APPLICATION_JSON)
-                        .post(Entity.entity(recipe, APPLICATION_JSON), Recipe.class);
-            }
+    /**
+     * For adding a recipe to the server
+     * @param recipe The ingredient object to be added
+     */
+    public static Recipe addRecipe(Recipe recipe) {
+        try (var client = ClientBuilder.newClient(new ClientConfig())) {
+            return client.target(SERVER).path("api/recipes")
+                    .request(APPLICATION_JSON)
+                    .post(Entity.entity(recipe, APPLICATION_JSON), Recipe.class);
         }
+    }
 
-        public void deleteRecipe(long id) {
-            try (var client = ClientBuilder.newClient(new ClientConfig())) {
-                client.target(SERVER).path("api/recipes/" + id)
-                        .request(APPLICATION_JSON)
-                        .delete();
-            }
+    /**
+     * Deleting recipes using their id
+     * @param id The id of the recipe to be deleted
+     */
+    public static void deleteRecipe(long id) {
+        try (var client = ClientBuilder.newClient(new ClientConfig())) {
+            client.target(SERVER).path("api/recipes/" + id)
+                    .request(APPLICATION_JSON)
+                    .delete();
         }
+    }
 
-        public Ingredient addIngredient(Ingredient ingredient) {
-            try (var client = ClientBuilder.newClient(new ClientConfig())) {
-                return client.target(SERVER).path("api/ingredients")
-                        .request(APPLICATION_JSON)
-                        .post(Entity.entity(ingredient, APPLICATION_JSON), Ingredient.class);
-            }
+    /**
+     * For adding an ingredient to the server
+     * @param ingredient The ingredient object to be added
+     */
+    public static Ingredient addIngredient(Ingredient ingredient) {
+        try (var client = ClientBuilder.newClient(new ClientConfig())) {
+            return client.target(SERVER).path("api/ingredients")
+                    .request(APPLICATION_JSON)
+                    .post(Entity.entity(ingredient, APPLICATION_JSON), Ingredient.class);
         }
+    }
 
-        public void deleteIngredient(long id) {
+    /**
+     * Deleting ingredients using their id
+     * @param id The id of the ingredient to be deleted
+     */
+    public static void deleteIngredient(long id) {
             try (var client = ClientBuilder.newClient(new ClientConfig())) {
             client.target(SERVER).path("api/ingredients/" + id)
                     .request(APPLICATION_JSON)
