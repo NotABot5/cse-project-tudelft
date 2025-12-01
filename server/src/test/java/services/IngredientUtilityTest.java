@@ -1,8 +1,7 @@
 package services;
 
 import commons.Ingredient;
-import commons.IngredientUsage;
-import commons.Recipe;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
+
 import static org.mockito.Mockito.when;
 
 // We use Mockito to create a mock of IngredientRepository, so we don't need to use a real database, and can provide controlled test data.

@@ -1,6 +1,6 @@
 package client;
 
-import javafx.embed.swing.JFXPanel;
+import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,8 +14,8 @@ class MainLectureTest {
     private Main controller;
     @BeforeAll
     static void initJFX() {
-        new JFXPanel(); // start JavaFX runtime
-    }
+        Platform.startup(()-> {});
+            }
 
     @BeforeEach
     void setUp() {
