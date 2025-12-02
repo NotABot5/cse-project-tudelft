@@ -8,6 +8,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 import server.database.IngredientRepository;
 import server.services.IngredientService;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
@@ -75,5 +78,19 @@ public class IngredientServiceTest {
         ingredientService.changeName(ingredient, "Pork");
         Ingredient found = tester.findById(ingredient.getId()).get();
         assertEquals("Pork", found.getName());
+    }
+
+    @Test
+    public void fetchSortedTest() {
+        ingredientService.addIngredient(ingredient);
+        Ingredient ingredientFirst = new Ingredient("Apple",0,0,0);
+        Ingredient ingredientLast = new Ingredient("Potato",10,4,2);
+        ingredientService.addIngredient(ingredientFirst);
+        ingredientService.addIngredient(ingredientLast);
+        List<Ingredient> found = ingredientService.fetchIngredientsSorted();
+        assertEquals(3, found.size());
+        assertEquals(ingredientFirst, found.get(0));
+        assertEquals(ingredient, found.get(1));
+        assertEquals(ingredientLast, found.get(2));
     }
 }

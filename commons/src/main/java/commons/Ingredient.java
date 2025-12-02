@@ -100,8 +100,6 @@ public class Ingredient implements Comparable<Ingredient> {
             throw new NullPointerException("Name of ingredient (given as argument in comparing method) is null");
         }
         int indicatorValue = getName().compareTo(other.getName());
-        if (indicatorValue < 0) {return(-1);}
-        else if (indicatorValue > 0) {return(1);}
-        else {return(0);}
+        return Integer.compare(indicatorValue, 0);
     }
 }

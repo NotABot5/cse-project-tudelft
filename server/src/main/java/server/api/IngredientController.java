@@ -36,6 +36,14 @@ public class IngredientController {
     }
 
     /**
+     *
+     */
+    @GetMapping("/sorted")
+    public List<Ingredient> fetchIngredientsSorted() {
+        return ingredientService.fetchIngredientsSorted();
+    }
+
+    /**
      * Add ingredient in request body to database
      * @param ingredient the ingredient to add
      * @return true if ingredient added successfully, false otherwise
