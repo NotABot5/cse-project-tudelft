@@ -2,8 +2,7 @@ package client;
 
 
 import commons.Recipe;
-import org.springframework.beans.factory.annotation.Autowired;
-import server.api.RecipeController;
+import javafx.application.Platform;
 import javafx.application.Application;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -14,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import client.utils.ServerUtils;
 
 import java.util.List;
 
@@ -29,12 +29,7 @@ public class RecipeList extends Application {
     @FXML
     protected TableColumn<Recipe, String> languageColumn;
 
-    private final RecipeController recipeController;
 
-    @Autowired
-    public RecipeList(RecipeController recipeController) {
-        this.recipeController = recipeController;
-    }
 
     public static void main(String[] args) {
         launch(args);
@@ -75,8 +70,12 @@ public class RecipeList extends Application {
      * Makes use of getAll method from recipeController and sets items
      */
     private void loadRecipeTable() {
-        List<Recipe> recipeList = recipeController.getAll();
-        table.setItems(FXCollections.observableList(recipeList));
+        new Thread(() -> {
+            List<Recipe> recipeList = ServerUtils.getRecipes();
+            Platform.runLater(() ->
+                    table.setItems(FXCollections.observableList(recipeList))
+            );
+        }).start();
     }
 
 
