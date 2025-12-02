@@ -1,6 +1,6 @@
 package client;
 
-import javafx.embed.swing.JFXPanel;
+import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,10 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class MainLectureTest {
 
     private Main controller;
+
     @BeforeAll
     static void initJFX() {
-        new JFXPanel(); // start JavaFX runtime
-    }
+        Platform.startup(()-> {});
+            }
 
     @BeforeEach
     void setUp() {
@@ -44,7 +45,7 @@ class MainLectureTest {
 
     @Test
     void testEditAndCancel() {
-        // zet initiële waarden
+        // Set some values
         controller.fieldName.setText("Apple");
         controller.fieldFat.setText("0.2");
         controller.fieldCarbs.setText("14");
@@ -52,13 +53,13 @@ class MainLectureTest {
 
         controller.onEdit();
 
-        // wijzig waarden
+        // Change values
         controller.fieldName.setText("Banana");
         controller.fieldFat.setText("0.1");
         controller.fieldCarbs.setText("23");
         controller.fieldProtein.setText("1.1");
 
-        // cancel terugzetten
+        // Revert it
         controller.onCancel();
 
         assertEquals("Apple", controller.fieldName.getText());
