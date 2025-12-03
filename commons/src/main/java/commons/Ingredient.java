@@ -9,6 +9,10 @@ import java.util.Set;
 
 import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
+/**
+ * Entity Ingredient implements Comparable in order to make sorting of ingredients possible
+ * Sorting ingredients is required for one of the backlog requirements, so hence why it is implemented here
+ */
 @Entity
 public class Ingredient implements Comparable<Ingredient> {
     @Id
