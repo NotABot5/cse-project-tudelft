@@ -116,4 +116,13 @@ public class IngredientService {
     public Optional<Ingredient> fetchIngredientByID(long id) {
         return ingredientRepository.findById(id);
     }
+
+    /**
+     * Fetches all ingredients from database and sorts them by name
+     * @return list of all ingredients, sorted by name (alphabetically a -> z)
+     */
+    public List<Ingredient> fetchIngredientsSorted() {
+        List<Ingredient> rawList = ingredientRepository.findAll();
+        return(rawList.stream().sorted().toList());
+    }
 }
