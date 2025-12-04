@@ -36,7 +36,7 @@ public class IngredientController {
     }
 
     /**
-     *
+     * Returns a sorted list of ingredients
      */
     @GetMapping("/sorted")
     public List<Ingredient> fetchIngredientsSorted() {
