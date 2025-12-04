@@ -54,17 +54,17 @@ class IngredientUsageControllerTest {
 
     @Test
     public void testFetchAllIngredientUsages() {
-        assertEquals(List.of(testIngUsage), ingredientUsageController.fetchAllIngredientUsages());
+        assertEquals(List.of(testIngUsage), ingredientUsageController.fetchAllIngredientUsages().getBody());
     }
 
     @Test
     public void testFetchAllIngredientsInRecipe() {
-        assertEquals(List.of(testIngUsage), ingredientUsageController.fetchAllIngredientsInRecipe(rec.id));
+        assertEquals(List.of(testIngUsage), ingredientUsageController.fetchAllIngredientsInRecipe(rec.id).getBody());
     }
 
     @Test
     public void testFetchRecipeCount() {
-        assertEquals(1, ingredientUsageController.fetchRecipeCount(ing.id));
+        assertEquals(1, ingredientUsageController.fetchRecipeCount(ing.id).getBody());
     }
 
     @Test
@@ -80,7 +80,7 @@ class IngredientUsageControllerTest {
     public void testDeleteIngredientUsage() {
         IngredientUsage toDelete = new IngredientUsage(rec, ing, 5, "g");
         tester.save(toDelete);
-        assertTrue(ingredientUsageController.deleteIngredientUsage(toDelete.getId()));
+        assertTrue(ingredientUsageController.deleteIngredientUsage(toDelete.getId()).getBody());
         assertEquals(List.of(testIngUsage), tester.findAll());
     }
 }
