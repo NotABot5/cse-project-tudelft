@@ -1,6 +1,7 @@
 package server.api;
 
 import commons.IngredientUsage;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import server.database.IngredientUsageRepository;
@@ -26,9 +27,9 @@ public class IngredientUsageController {
      * Fetches all ingredient usages from database
      * @return list of all ingredient usages
      */
-    @GetMapping("/")
-    public List<IngredientUsage> fetchAllIngredientUsages() {
-        return ingredientUsageRepository.findAll();
+    @GetMapping(path = { "", "/" })
+    public ResponseEntity<List<IngredientUsage>>  fetchAllIngredientUsages() {
+        return ResponseEntity.ok(ingredientUsageRepository.findAll());
     }
 
     /**
@@ -36,10 +37,10 @@ public class IngredientUsageController {
      * @return list of all matching ingredient usages
      */
     @GetMapping("/{id}")
-    public List<IngredientUsage> fetchAllIngredientsInRecipe(@PathVariable("id") Long id) {
-        return ingredientUsageRepository.findAll().stream().filter(
+    public ResponseEntity<List<IngredientUsage>> fetchAllIngredientsInRecipe(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(ingredientUsageRepository.findAll().stream().filter(
                 (IngredientUsage ing) -> Objects.equals(ing.getRecipe().getId(), id)
-        ).toList();
+        ).toList()) ;
     }
 
     /**
@@ -47,10 +48,10 @@ public class IngredientUsageController {
      * @return count of recipes in which an ingredient is present
      */
     @GetMapping("/recipeCount/{id}")
-    public long fetchRecipeCount(@PathVariable("id") Long id) {
-        return ingredientUsageRepository.findAll().stream().filter(
+    public ResponseEntity<Long> fetchRecipeCount(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(ingredientUsageRepository.findAll().stream().filter(
                 (IngredientUsage ing) -> ing.getIngredient().getId() == id
-        ).count();
+        ).count());
     }
 
     /**
@@ -58,9 +59,9 @@ public class IngredientUsageController {
      * @param ingredientUsage the ingredient usage to add
      * @return added ingredient usage, or null if adding unsuccessful
      */
-    @PostMapping("/")
-    public IngredientUsage addIngredientUsage(@RequestBody IngredientUsage ingredientUsage) {
-        return ingredientUsageService.addIngredientUsage(ingredientUsage);
+    @PostMapping(path = { "", "/" })
+    public ResponseEntity<IngredientUsage>  addIngredientUsage(@RequestBody IngredientUsage ingredientUsage) {
+        return ResponseEntity.ok(ingredientUsageService.addIngredientUsage(ingredientUsage));
     }
 
     /**
@@ -69,7 +70,7 @@ public class IngredientUsageController {
      * @return true if deleted successfully, false otherwise
      */
     @DeleteMapping("/{id}")
-    public boolean deleteIngredientUsage(@PathVariable("id") Long id) {
-        return ingredientUsageService.deleteIngredientUsage(id);
+    public ResponseEntity<Boolean> deleteIngredientUsage(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(ingredientUsageService.deleteIngredientUsage(id));
     }
 }

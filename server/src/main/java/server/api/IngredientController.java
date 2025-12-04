@@ -21,9 +21,9 @@ public class IngredientController {
      * Fetch all ingredients from database and return on /
      * @return list of all ingredients in database
      */
-    @GetMapping("/")
-    public List<Ingredient> fetchAllIngredients() {
-        return ingredientService.fetchAllIngredients();
+    @GetMapping(path = { "", "/" })
+    public ResponseEntity<List<Ingredient>>  fetchAllIngredients() {
+        return ResponseEntity.ok(ingredientService.fetchAllIngredients());
     }
 
     /**
@@ -39,8 +39,8 @@ public class IngredientController {
      * Returns a sorted list of ingredients
      */
     @GetMapping("/sorted")
-    public List<Ingredient> fetchIngredientsSorted() {
-        return ingredientService.fetchIngredientsSorted();
+    public ResponseEntity<List<Ingredient>>  fetchIngredientsSorted() {
+        return ResponseEntity.ok(ingredientService.fetchIngredientsSorted());
     }
 
     /**
@@ -48,9 +48,9 @@ public class IngredientController {
      * @param ingredient the ingredient to add
      * @return the added ingredient if added successfully, null otherwise
      */
-    @PostMapping("/")
-    public Ingredient addIngredient(@RequestBody Ingredient ingredient) {
-        return ingredientService.addIngredient(ingredient);
+    @PostMapping(path = { "", "/" })
+    public ResponseEntity<Ingredient> addIngredient(@RequestBody Ingredient ingredient) {
+        return ResponseEntity.ok(ingredientService.addIngredient(ingredient)) ;
     }
 
     /**
