@@ -56,20 +56,20 @@ public class IngredientUsageController {
     /**
      * Adds a new ingredient usage to the database
      * @param ingredientUsage the ingredient usage to add
-     * @return true if added successfully, false otherwise
+     * @return added ingredient usage, or null if adding unsuccessful
      */
     @PostMapping("/")
-    public boolean addIngredientUsage(@RequestBody IngredientUsage ingredientUsage) {
+    public IngredientUsage addIngredientUsage(@RequestBody IngredientUsage ingredientUsage) {
         return ingredientUsageService.addIngredientUsage(ingredientUsage);
     }
 
     /**
      * Deletes an ingredient usage from the database
-     * @param ingredientUsage the ingredient usage to delete
+     * @param id id of ingredient usage to delete
      * @return true if deleted successfully, false otherwise
      */
-    @DeleteMapping("/")
-    public boolean deleteIngredientUsage(@RequestBody IngredientUsage ingredientUsage) {
-        return ingredientUsageService.deleteIngredientUsage(ingredientUsage);
+    @DeleteMapping("/{id}")
+    public boolean deleteIngredientUsage(@PathVariable("id") Long id) {
+        return ingredientUsageService.deleteIngredientUsage(id);
     }
 }

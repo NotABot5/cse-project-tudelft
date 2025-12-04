@@ -17,27 +17,25 @@ public class IngredientUsageService {
      * Adds ingredient usage to repository, given that it is not null and does not already exist
      * "Already existing" refers to whether an ingredient usage with the same ID exists
      * @param ingredientUsage ingredient usage to be added
-     * @return true iff ingredient usage was added successfully
+     * @return the added ingredient usage if it was added successfully, null otherwise
      */
-    public boolean addIngredientUsage(IngredientUsage ingredientUsage) {
+    public IngredientUsage addIngredientUsage(IngredientUsage ingredientUsage) {
         if ((ingredientUsage != null)
                 && (!ingredientUsageRepository.existsById(ingredientUsage.getId()))) {
-            ingredientUsageRepository.save(ingredientUsage);
-            return(true);
+            return ingredientUsageRepository.save(ingredientUsage);
         }
-        return(false);
+        return null;
     }
 
     /**
-     * Removes ingredient usage, given that it is not null and exists
+     * Removes ingredient usage, given that it exists
      * "Existing" refers to whether an ingredient usage with the same ID exists
-     * @param ingredientUsage ingredient usage to be deleted
+     * @param id id of ingredient usage to be deleted
      * @return true iff ingredient usage was deleted successfully
      */
-    public boolean deleteIngredientUsage (IngredientUsage ingredientUsage) {
-        if ((ingredientUsage != null)
-                && (ingredientUsageRepository.existsById(ingredientUsage.getId()))) {
-            ingredientUsageRepository.deleteById(ingredientUsage.getId());
+    public boolean deleteIngredientUsage (long id) {
+        if ((ingredientUsageRepository.existsById(id))) {
+            ingredientUsageRepository.deleteById(id);
             return(true);
         }
         return(false);
@@ -46,15 +44,13 @@ public class IngredientUsageService {
     /**
      * Changes ingredient amount to new value specified, given that it is not null
      * Produces NoSuchElementException in case ingredient usage with id does not exist
-     * @param ingredientUsage ingredient usage to be changed
+     * @param id id of ingredient usage to be changed
      * @param newValue new protein value
      */
-    public void changeAmount(IngredientUsage ingredientUsage, int newValue) {
-        if ((ingredientUsage != null)) {
-            IngredientUsage toBeChanged = ingredientUsageRepository.findById(ingredientUsage.getId()).orElseThrow();
-            toBeChanged.setAmount(newValue);
-            //Note: According to documentation, Spring saves entities that are updated this way automatically
-        }
+    public void changeAmount(long id, int newValue) {
+        IngredientUsage toBeChanged = ingredientUsageRepository.findById(id).orElseThrow();
+        toBeChanged.setAmount(newValue);
+        //Note: According to documentation, Spring saves entities that are updated this way automatically
     }
 
     //NOTE: Have not added a "changeUnit" method as the datatype of units may be changed later
