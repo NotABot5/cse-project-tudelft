@@ -22,6 +22,8 @@ public class RecipeService {
      * @param recipe the recipe that is being checked
      * @throws IllegalArgumentException if recipe is null
      */
+    // The NotNull methods and their implementation in other methods were written by AI
+    // to spend less time on them.
     private void recipeNotNull(Recipe recipe) {
         if  (recipe == null) {
             throw new IllegalArgumentException("Recipe cannot be null");
