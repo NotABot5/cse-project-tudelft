@@ -31,27 +31,21 @@ public class IngredientServiceTest {
 
     @Test
     public void addTest() {
-        ingredientService.addIngredient(ingredient);
+        assertEquals(ingredient, ingredientService.addIngredient(ingredient));
         Ingredient found = tester.findById(ingredient.getId()).get();
         assertEquals(ingredient, found);
     }
 
     @Test
-    public void addExistingTest() {
-        ingredientService.addIngredient(ingredient);
-        assertFalse(ingredientService.addIngredient(ingredient));
-    }
-
-    @Test
     public void deleteTest() {
         ingredientService.addIngredient(ingredient);
-        assertTrue(ingredientService.deleteIngredient(ingredient));
+        assertTrue(ingredientService.deleteIngredient(ingredient.getId()));
     }
 
     @Test
     public void changeProteinTest() {
         ingredientService.addIngredient(ingredient);
-        ingredientService.changeProtein(ingredient, 100);
+        ingredientService.changeProtein(ingredient.getId(), 100);
         Ingredient found = tester.findById(ingredient.getId()).get();
         assertEquals(100, found.getProtein());
     }
@@ -59,7 +53,7 @@ public class IngredientServiceTest {
     @Test
     public void changeFatTest() {
         ingredientService.addIngredient(ingredient);
-        ingredientService.changeFat(ingredient, 22);
+        ingredientService.changeFat(ingredient.getId(), 22);
         Ingredient found = tester.findById(ingredient.getId()).get();
         assertEquals(22, found.getFat());
     }
@@ -67,7 +61,7 @@ public class IngredientServiceTest {
     @Test
     public void changeCarbsTest() {
         ingredientService.addIngredient(ingredient);
-        ingredientService.changeCarbs(ingredient, 1234);
+        ingredientService.changeCarbs(ingredient.getId(), 1234);
         Ingredient found = tester.findById(ingredient.getId()).get();
         assertEquals(1234, found.getCarbs());
     }
@@ -75,7 +69,7 @@ public class IngredientServiceTest {
     @Test
     public void changeNameTest() {
         ingredientService.addIngredient(ingredient);
-        ingredientService.changeName(ingredient, "Pork");
+        ingredientService.changeName(ingredient.getId(), "Pork");
         Ingredient found = tester.findById(ingredient.getId()).get();
         assertEquals("Pork", found.getName());
     }

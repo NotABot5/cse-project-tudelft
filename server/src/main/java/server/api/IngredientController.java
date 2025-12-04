@@ -46,64 +46,67 @@ public class IngredientController {
     /**
      * Add ingredient in request body to database
      * @param ingredient the ingredient to add
-     * @return true if ingredient added successfully, false otherwise
+     * @return the added ingredient if added successfully, null otherwise
      */
     @PostMapping("/")
-    public boolean addIngredient(@RequestBody Ingredient ingredient) {
+    public Ingredient addIngredient(@RequestBody Ingredient ingredient) {
         return ingredientService.addIngredient(ingredient);
     }
 
     /**
      * Delete ingredient in request body to database
-     * @param ingredient the ingredient to delete
-     * @return true if ingredient deleted successfully, false otherwise
+     * @param id id of the ingredient to delete
      */
-    @DeleteMapping("/")
-    public boolean deleteIngredient(@RequestBody Ingredient ingredient) {
-        return ingredientService.deleteIngredient(ingredient);
+    @DeleteMapping("/{id}")
+    public void deleteIngredient(@PathVariable("id") Long id) {
+        ingredientService.deleteIngredient(id);
     }
 
     /**
      * Update name of ingredient with an updated ingredient
-     * @param updatedIngredient ingredient to replace the old value with
+     * @param id id of ingredient to replace the old value in
+     * @param updatedData new data to replace old with
      */
-    @PutMapping("/name")
-    public void changeName(@RequestBody Ingredient updatedIngredient) {
-        if (updatedIngredient != null) {
-            ingredientService.changeName(updatedIngredient, updatedIngredient.getName());
+    @PutMapping("/name/{id}")
+    public void changeName(@PathVariable("id") Long id, @RequestBody String updatedData) {
+        if (updatedData != null) {
+            ingredientService.changeName(id, updatedData);
         }
     }
 
     /**
      * Update fat in ingredient with an updated ingredient
-     * @param updatedIngredient ingredient to replace the old value with
+     * @param id id of ingredient to replace the old value in
+     * @param updatedData new data to replace old with
      */
-    @PutMapping("/fat")
-    public void changeFat(@RequestBody Ingredient updatedIngredient) {
-        if (updatedIngredient != null) {
-            ingredientService.changeFat(updatedIngredient, updatedIngredient.getFat());
+    @PutMapping("/fat/{id}")
+    public void changeFat(@PathVariable("id") Long id, @RequestBody Double updatedData) {
+        if (updatedData != null) {
+            ingredientService.changeFat(id, updatedData);
         }
     }
 
     /**
      * Update carbs in ingredient with an updated ingredient
-     * @param updatedIngredient ingredient to replace the old value with
+     * @param id id of ingredient to replace the old value in
+     * @param updatedData new data to replace old with
      */
-    @PutMapping("/carbs")
-    public void changeCarbs(@RequestBody Ingredient updatedIngredient) {
-        if (updatedIngredient != null) {
-            ingredientService.changeCarbs(updatedIngredient, updatedIngredient.getCarbs());
+    @PutMapping("/carbs/{id}")
+    public void changeCarbs(@PathVariable("id") Long id, @RequestBody Double updatedData) {
+        if (updatedData != null) {
+            ingredientService.changeCarbs(id, updatedData);
         }
     }
 
     /**
      * Update protein in ingredient with an updated ingredient
-     * @param updatedIngredient ingredient to replace the old value with
+     * @param id id of ingredient to replace the old value in
+     * @param updatedData new data to replace old with
      */
-    @PutMapping("/protein")
-    public void changeProtein(@RequestBody Ingredient updatedIngredient) {
-        if (updatedIngredient != null) {
-            ingredientService.changeProtein(updatedIngredient, updatedIngredient.getProtein());
+    @PutMapping("/protein/{id}")
+    public void changeProtein(@PathVariable("id") Long id, @RequestBody Double updatedData) {
+        if (updatedData != null) {
+            ingredientService.changeProtein(id, updatedData);
         }
     }
 }
