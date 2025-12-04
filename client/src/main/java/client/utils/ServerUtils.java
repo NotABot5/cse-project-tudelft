@@ -3,6 +3,7 @@ package client.utils;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import commons.Ingredient;
+import commons.IngredientUsage;
 import jakarta.ws.rs.client.Entity;
 import org.glassfish.jersey.client.ClientConfig;
 
@@ -97,11 +98,63 @@ public class ServerUtils {
      * @param id The id of the ingredient to be deleted
      */
     public static void deleteIngredient(long id) {
-            try (var client = ClientBuilder.newClient(new ClientConfig())) {
+        try (var client = ClientBuilder.newClient(new ClientConfig())) {
             client.target(SERVER).path("api/ingredients/" + id)
                     .request(APPLICATION_JSON)
                     .delete();
-            }
         }
+    }
 
+    /**
+     * Fetches all ingredient used in a recipe
+     * @param id id of recipe to fetch ingredients from
+     * @return list of ingredient usages in recipe
+     */
+    public static List<IngredientUsage> fetchAllIngredientsInRecipe(long id) {
+        try (var client = ClientBuilder.newClient(new ClientConfig())) {
+            return client.target(SERVER)
+                    .path("api/ingredientUsage/" + id)
+                    .request(APPLICATION_JSON)
+                    .get(new GenericType<>() {});
+        }
+    }
+
+    /**
+     * Fetches the count of recipes corresponding to a given ingredient
+     * @param id id of ingredient to check
+     * @return recipe count of that ingredient
+     */
+    public static long fetchRecipeCount(long id) {
+        try (var client = ClientBuilder.newClient(new ClientConfig())) {
+            return client.target(SERVER)
+                    .path("api/ingredientUsage/recipeCount/" + id)
+                    .request(APPLICATION_JSON)
+                    .get(new GenericType<>() {});
+        }
+    }
+
+    /**
+     * Requests ingredient usage to be added on the server
+     * @param ingredientUsage ingredient usage to be added
+     * @return the added ingredient usage
+     */
+    public static IngredientUsage addIngredientUsage(IngredientUsage ingredientUsage) {
+        try (var client = ClientBuilder.newClient(new ClientConfig())) {
+            return client.target(SERVER).path("api/ingredientUsage")
+                    .request(APPLICATION_JSON)
+                    .post(Entity.entity(ingredientUsage, APPLICATION_JSON), IngredientUsage.class);
+        }
+    }
+
+    /**
+     * Requests ingredient usage to be deleted from the server
+     * @param id id of ingredient usage to be deleted
+     */
+    public static void deleteIngredientUsage(long id) {
+        try (var client = ClientBuilder.newClient(new ClientConfig())) {
+            client.target(SERVER).path("api/ingredientUsage/" + id)
+                    .request(APPLICATION_JSON)
+                    .delete();
+        }
+    }
 }
