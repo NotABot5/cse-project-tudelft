@@ -34,7 +34,7 @@ class IngredientControllerTest {
 
     @Test
     public void fetchAllTest() {
-        assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients());
+        assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients().getBody());
     }
 
     @Test
@@ -49,7 +49,7 @@ class IngredientControllerTest {
         Ingredient ingredientLast = new Ingredient("Potato",10,4,2);
         ingredientController.addIngredient(ingredientFirst);
         ingredientController.addIngredient(ingredientLast);
-        List<Ingredient> found = ingredientController.fetchIngredientsSorted();
+        List<Ingredient> found = ingredientController.fetchIngredientsSorted().getBody();
         assertEquals(3, found.size());
         assertEquals(ingredientFirst, found.get(0));
         assertEquals(ingredient, found.get(1));
@@ -59,16 +59,16 @@ class IngredientControllerTest {
     @Test
     public void addDeleteIngredientTest() {
         assertNotNull(ingredientController.addIngredient(ingredientCopy));
-        assertEquals(2, ingredientController.fetchAllIngredients().size());
+        assertEquals(2, ingredientController.fetchAllIngredients().getBody().size());
         ingredientController.deleteIngredient(ingredientCopy.getId());
-        assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients());
+        assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients().getBody());
     }
 
     @Test
     public void updateNameTest() {
         ingredient.name = "Pork";
         ingredientController.changeName(ingredient.getId(), ingredient.name);
-        assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients());
+        assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients().getBody());
     }
 
 
@@ -76,7 +76,7 @@ class IngredientControllerTest {
     public void updateCarbsTest() {
         ingredient.carbs = 100;
         ingredientController.changeCarbs(ingredient.getId(), ingredient.carbs);
-        assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients());
+        assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients().getBody());
     }
 
 
@@ -84,7 +84,7 @@ class IngredientControllerTest {
     public void updateProteinTest() {
         ingredient.protein = 100;
         ingredientController.changeProtein(ingredient.getId(), ingredient.protein);
-        assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients());
+        assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients().getBody());
     }
 
 
@@ -92,6 +92,6 @@ class IngredientControllerTest {
     public void updateFatTest() {
         ingredient.fat = 100;
         ingredientController.changeFat(ingredient.getId(), ingredient.fat);
-        assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients());
+        assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients().getBody());
     }
 }
