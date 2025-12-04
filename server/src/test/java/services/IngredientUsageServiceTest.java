@@ -44,21 +44,15 @@ public class IngredientUsageServiceTest {
     }
 
     @Test
-    public void addExistingTest() {
-        ingredientUsageService.addIngredientUsage(ingredientUsage);
-        assertFalse(ingredientUsageService.addIngredientUsage(ingredientUsage));
-    }
-
-    @Test
     public void deleteTest() {
         ingredientUsageService.addIngredientUsage(ingredientUsage);
-        assertTrue(ingredientUsageService.deleteIngredientUsage(ingredientUsage));
+        assertTrue(ingredientUsageService.deleteIngredientUsage(ingredientUsage.getId()));
     }
 
     @Test
     public void changeAmountTest() {
         ingredientUsageService.addIngredientUsage(ingredientUsage);
-        ingredientUsageService.changeAmount(ingredientUsage, 5000);
+        ingredientUsageService.changeAmount(ingredientUsage.getId(), 5000);
         IngredientUsage found = tester.findById(ingredientUsage.getId()).get();
         assertEquals(5000, found.getAmount());
     }

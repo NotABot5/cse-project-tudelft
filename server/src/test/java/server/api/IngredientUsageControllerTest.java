@@ -69,7 +69,7 @@ class IngredientUsageControllerTest {
 
     @Test
     public void testAddIngredientUsage() {
-        assertTrue(ingredientUsageController.addIngredientUsage(tempIngUsage));
+        assertNotNull(ingredientUsageController.addIngredientUsage(tempIngUsage));
         Optional<IngredientUsage> res = tester.findById(tempIngUsage.getId());
         assertTrue(res.isPresent());
         assertEquals(tempIngUsage, res.get());
@@ -80,7 +80,7 @@ class IngredientUsageControllerTest {
     public void testDeleteIngredientUsage() {
         IngredientUsage toDelete = new IngredientUsage(rec, ing, 5, "g");
         tester.save(toDelete);
-        assertTrue(ingredientUsageController.deleteIngredientUsage(toDelete));
+        assertTrue(ingredientUsageController.deleteIngredientUsage(toDelete.getId()));
         assertEquals(List.of(testIngUsage), tester.findAll());
     }
 }
