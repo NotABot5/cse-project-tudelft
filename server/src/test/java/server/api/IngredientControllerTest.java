@@ -58,16 +58,16 @@ class IngredientControllerTest {
 
     @Test
     public void addDeleteIngredientTest() {
-        assertTrue(ingredientController.addIngredient(ingredientCopy));
+        assertNotNull(ingredientController.addIngredient(ingredientCopy));
         assertEquals(2, ingredientController.fetchAllIngredients().size());
-        assertTrue(ingredientController.deleteIngredient(ingredientCopy));
+        ingredientController.deleteIngredient(ingredientCopy.getId());
         assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients());
     }
 
     @Test
     public void updateNameTest() {
         ingredient.name = "Pork";
-        ingredientController.changeName(ingredient);
+        ingredientController.changeName(ingredient.getId(), ingredient.name);
         assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients());
     }
 
@@ -75,7 +75,7 @@ class IngredientControllerTest {
     @Test
     public void updateCarbsTest() {
         ingredient.carbs = 100;
-        ingredientController.changeCarbs(ingredient);
+        ingredientController.changeCarbs(ingredient.getId(), ingredient.carbs);
         assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients());
     }
 
@@ -83,7 +83,7 @@ class IngredientControllerTest {
     @Test
     public void updateProteinTest() {
         ingredient.protein = 100;
-        ingredientController.changeProtein(ingredient);
+        ingredientController.changeProtein(ingredient.getId(), ingredient.protein);
         assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients());
     }
 
@@ -91,7 +91,7 @@ class IngredientControllerTest {
     @Test
     public void updateFatTest() {
         ingredient.fat = 100;
-        ingredientController.changeFat(ingredient);
+        ingredientController.changeFat(ingredient.getId(), ingredient.fat);
         assertEquals(List.of(ingredient), ingredientController.fetchAllIngredients());
     }
 }
