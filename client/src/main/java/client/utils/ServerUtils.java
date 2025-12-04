@@ -46,10 +46,10 @@ public class ServerUtils {
      * @return list of ingredients stored in server
      */
     public static List<Ingredient> getIngredients() {
-        //Pathname used in IngredientController: /api/ingredients
+        //Pathname used in IngredientController: /api/ingredients/sorted
         try (var client = ClientBuilder.newClient(new ClientConfig())) {
             return client.target(SERVER)
-                    .path("api/ingredients")
+                    .path("api/ingredients/sorted")
                     .request(APPLICATION_JSON)
                     .get(new GenericType<>() {
                     });
