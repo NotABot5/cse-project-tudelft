@@ -1,6 +1,11 @@
 package client;
 
 
+import client.scenes.AddRecipeCtrl;
+import client.scenes.MainCtrl;
+import client.scenes.RecipeListCtrl;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import commons.Recipe;
 import javafx.application.Platform;
 import javafx.application.Application;
@@ -20,14 +25,8 @@ import java.util.List;
 
 public class RecipeList extends Application {
 
-    @FXML
-    protected TableView<Recipe> table;
-    @FXML
-    protected TableColumn<Recipe, Long> idColumn;
-    @FXML
-    protected TableColumn<Recipe, String> nameColumn;
-    @FXML
-    protected TableColumn<Recipe, String> languageColumn;
+    private static final Injector INJECTOR = Guice.createInjector(new MyModule());
+    private static final MyFXML FXML = new MyFXML (INJECTOR);
 
 
 
@@ -44,52 +43,11 @@ public class RecipeList extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/recipeList.fxml"));
-        Scene scene = new Scene(loader.load());
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Recipe List");
-        primaryStage.show();
-    }
-
-    /**
-     * Called automatically after the FXML has been loaded.
-     * Sets all TextFields to non-editable initially.
-     */
-
-    @FXML
-    public void initialize() {
-        setEditable(false);
-        idColumn.setCellValueFactory(cell -> new SimpleLongProperty(cell.getValue().getId()).asObject());
-        nameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName()));
-        languageColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getLang()));
-        loadRecipeTable();
-    }
-
-    /**
-     * Helper method to load recipe table
-     * Makes use of getAll method from recipeController and sets items
-     */
-    private void loadRecipeTable() {
-        new Thread(() -> {
-            List<Recipe> recipeList = ServerUtils.getRecipes();
-            Platform.runLater(() ->
-                    table.setItems(FXCollections.observableList(recipeList))
-            );
-        }).start();
+        var recipeList = FXML.load(RecipeListCtrl.class, "client", "recipeList.fxml");
+        var addRecipe = FXML.load(AddRecipeCtrl.class, "client", "addRecipe.fxml");
+        var pc = INJECTOR.getInstance(MainCtrl.class);
+        pc.initialize(primaryStage, recipeList, addRecipe);
     }
 
 
-
-    /**
-     * Sets all TextFields to editable or read-only.
-     *
-     * @param value true to make editable, false to make read-only
-     */
-
-    protected void setEditable(boolean value) {
-        table.setEditable(value);
-        idColumn.setEditable(value);
-        nameColumn.setEditable(value);
-        languageColumn.setEditable(value);
-    }
 }
