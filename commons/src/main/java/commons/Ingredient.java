@@ -5,8 +5,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.util.Set;
-
 import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
 /**
@@ -23,9 +21,6 @@ public class Ingredient implements Comparable<Ingredient> {
     public double protein;
     public double fat;
     public double carbs;
-
-    @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL, orphanRemoval = true)
-    public Set<IngredientUsage> usedInRecipes;
 
     public Ingredient(String name, double protein, double fat, double carbs)
     {

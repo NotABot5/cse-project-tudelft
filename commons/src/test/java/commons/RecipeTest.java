@@ -40,7 +40,6 @@ class RecipeTest {
         assertTrue(toStringRes.contains("lang=en"));
         assertTrue(toStringRes.contains("name=test"));
         assertTrue(toStringRes.contains("preparation=[a]"));
-        assertTrue(toStringRes.contains("ingredients"));
     }
     @Test
     void testGetId(){
