@@ -97,6 +97,7 @@ public class RecipeList extends Application {
         // gets everything in a listview
         Listingredients.setCellFactory(lv -> new ListCell<>() {
             protected void updateItem(IngredientUsage item, boolean empty) {
+                super.updateItem(item, empty);
                 if (item != null) {
                     setText(item.getIngredient().getName() + " - " + item.getAmount() + " " + item.getUnit());
                 } else {
@@ -156,8 +157,7 @@ public class RecipeList extends Application {
         List<IngredientUsage> ingredientsRecipe =
                 ServerUtils.fetchAllIngredientsInRecipe(recipe.getId());
 
-        Listingredients.getItems().clear();
-        Listingredients.getItems().addAll(ingredientsRecipe);
+        Listingredients.getItems().setAll(ingredientsRecipe);
     }
 
 
@@ -174,6 +174,12 @@ public class RecipeList extends Application {
         languageColumn.setEditable(value);
     }
 
+    @FXML
+    protected void refreshData(MouseEvent event) {
+        table.getItems().clear();
+        loadRecipeTable();
+        Listingredients.getItems().clear();
+    }
 
     @FXML
     protected void AddnewIngredient(MouseEvent event) {
