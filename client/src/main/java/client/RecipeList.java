@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 
 
 public class RecipeList extends Application {
-
     private static final Injector INJECTOR = Guice.createInjector(new MyModule());
     private static final MyFXML FXML = new MyFXML (INJECTOR);
 
