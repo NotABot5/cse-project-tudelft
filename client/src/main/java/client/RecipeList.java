@@ -6,21 +6,8 @@ import client.scenes.MainCtrl;
 import client.scenes.RecipeListCtrl;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import commons.Recipe;
-import javafx.application.Platform;
 import javafx.application.Application;
-import javafx.beans.property.SimpleLongProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.stage.Stage;
-import client.utils.ServerUtils;
-
-import java.util.List;
 
 
 public class RecipeList extends Application {
