@@ -16,7 +16,6 @@ public class RecipeList extends Application {
     private static final MyFXML FXML = new MyFXML (INJECTOR);
 
 
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -35,6 +34,7 @@ public class RecipeList extends Application {
         var pc = INJECTOR.getInstance(MainCtrl.class);
         pc.initialize(primaryStage, recipeList, addRecipe);
     }
-
-
 }
+
+
+

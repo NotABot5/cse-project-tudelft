@@ -31,7 +31,7 @@ public class IngredientUsage {
     }
 
     @SuppressWarnings("unused")
-    private IngredientUsage() {}
+    public IngredientUsage() {}
 
     public long getId() {
         return id;
@@ -76,5 +76,13 @@ public class IngredientUsage {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
+    }
+
+    public void setIngredient(Ingredient ingredient) {
+        this.ingredient = ingredient;
+    }
+
+    public void setRecipe(Recipe selectedRecipe) {
+        this.recipe = selectedRecipe;
     }
 }

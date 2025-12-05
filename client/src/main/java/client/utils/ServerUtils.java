@@ -115,7 +115,8 @@ public class ServerUtils {
             return client.target(SERVER)
                     .path("api/ingredientUsage/" + id)
                     .request(APPLICATION_JSON)
-                    .get(new GenericType<>() {});
+                    .get(new GenericType<>() {
+                    });
         }
     }
 
@@ -155,6 +156,20 @@ public class ServerUtils {
             client.target(SERVER).path("api/ingredientUsage/" + id)
                     .request(APPLICATION_JSON)
                     .delete();
+        }
+    }
+    /**
+     * Fetches recipe based on id
+     * @param id the id of the recipe to fetch data from
+     * @return the selected recipe
+     */
+    public static Recipe getRecipeById(long id) {
+        try (var client = ClientBuilder.newClient(new ClientConfig())) {
+            return client.target(SERVER)
+                    .path("api/recipes/" + id)
+                    .request(APPLICATION_JSON)
+                    .get(new GenericType<>() {
+                    });
         }
     }
 }

@@ -36,7 +36,7 @@ public class Ingredient implements Comparable<Ingredient> {
     }
 
     @SuppressWarnings("unused")
-    private Ingredient() {}
+    public Ingredient() {}
 
     public long getId() {
         return id;
