@@ -38,6 +38,10 @@ public class RecipeList extends Application {
     protected TableColumn<Recipe, String> languageColumn;
     @FXML
     protected ListView<IngredientUsage> Listingredients;
+    @FXML
+    protected Label RecipeNameLabel;
+    @FXML
+    protected Label LanguageLabel;
 
 
     public static void main(String[] args) {
@@ -158,6 +162,8 @@ public class RecipeList extends Application {
                 ServerUtils.fetchAllIngredientsInRecipe(recipe.getId());
 
         Listingredients.getItems().setAll(ingredientsRecipe);
+        RecipeNameLabel.setText(recipe.getName());
+        LanguageLabel.setText("Language: " + recipe.getLang());
     }
 
 
@@ -179,6 +185,8 @@ public class RecipeList extends Application {
         table.getItems().clear();
         loadRecipeTable();
         Listingredients.getItems().clear();
+        RecipeNameLabel.setText("Nothing currently selected");
+        LanguageLabel.setText("Language: N/A");
     }
 
     @FXML
