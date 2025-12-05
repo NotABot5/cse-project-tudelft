@@ -34,6 +34,7 @@ public class RecipeList extends Application {
         var pc = INJECTOR.getInstance(MainCtrl.class);
         pc.initialize(primaryStage, recipeList, addRecipe);
     }
+
 }
 
 
