@@ -70,7 +70,6 @@ public class AddRecipeCtrl {
         recipeName.clear();
         language.clear();
     }
-
     /**
      * A model of an alert that can be customized for different purposes
      * @param title a general statement like success or error
