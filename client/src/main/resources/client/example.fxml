@@ -2,42 +2,48 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Main">
+<VBox prefHeight="400.0" prefWidth="640.0"
+      xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="client.Main">
 
     <children>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <children>
                 <Label alignment="CENTER" layoutX="155.0" layoutY="20.0" text="Nutrition Editor" textAlignment="CENTER" textFill="#9f9f9f">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="18.0"/>
                     </font>
                 </Label>
 
 
-                <Label layoutX="50.0" layoutY="60.0" text="Name:" />
-                <TextField fx:id="fieldName" layoutX="150.0" layoutY="60.0" prefWidth="150.0" />
+                <Label layoutX="50.0" layoutY="60.0" text="Name:"/>
+                <TextField fx:id="fieldName" layoutX="150.0" layoutY="60.0" prefWidth="150.0"/>
 
-                <Label layoutX="50.0" layoutY="100.0" text="Fat:" />
-                <TextField fx:id="fieldFat" layoutX="150.0" layoutY="100.0" prefWidth="150.0" />
+                <Label layoutX="50.0" layoutY="100.0" text="Fat:"/>
+                <TextField fx:id="fieldFat" layoutX="150.0" layoutY="100.0" prefWidth="150.0"/>
 
-                <Label layoutX="50.0" layoutY="140.0" text="Carbs:" />
-                <TextField fx:id="fieldCarbs" layoutX="150.0" layoutY="140.0" prefWidth="150.0" />
+                <Label layoutX="50.0" layoutY="140.0" text="Carbs:"/>
+                <TextField fx:id="fieldCarbs" layoutX="150.0" layoutY="140.0" prefWidth="150.0"/>
 
-                <Label layoutX="50.0" layoutY="180.0" text="Protein:" />
-                <TextField fx:id="fieldProtein" layoutX="150.0" layoutY="180.0" prefWidth="150.0" />
+                <Label layoutX="50.0" layoutY="180.0" text="Protein:"/>
+                <TextField fx:id="fieldProtein" layoutX="150.0" layoutY="180.0" prefWidth="150.0"/>
 
 
-                <Button fx:id="Button_Edit" layoutX="50.0" layoutY="230.0" onAction="#onEdit" text="Edit" />
-                <Button layoutX="120.0" layoutY="230.0" onAction="#onSave" text="Save" />
-                <Button layoutX="190.0" layoutY="230.0" onAction="#onCancel" text="Cancel" />
-                <Button layoutX="270.0" layoutY="230.0" onAction="#onClear" text="Clear" />
-            <Button fx:id="refreshbutton" layoutX="337.0" layoutY="230.0" mnemonicParsing="false" onAction="#onRefresh" text="Refresh" />
-            <Button fx:id="downloadbutton" layoutX="415.0" layoutY="230.0" mnemonicParsing="false" onAction="#onDownload" text="Download" />
+                <Button fx:id="Button_Edit" layoutX="50.0" layoutY="230.0" text="Edit" onAction="#onEdit"/>
+                <Button layoutX="120.0" layoutY="230.0" text="Save" onAction="#onSave"/>
+                <Button layoutX="190.0" layoutY="230.0" text="Cancel" onAction="#onCancel"/>
+                <Button layoutX="270.0" layoutY="230.0" text="Clear" onAction="#onClear"/>
 
                 
 
