@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -44,6 +45,24 @@ public class RecipeListCtrl {
         this.pc = m;
     }
 
+    /**
+     * Helper method to load recipe table
+     * Makes use of getAll method from recipeController and sets items
+     */
+    private void loadRecipeTable() {
+        new Thread(() -> {
+            List<Recipe> recipeList = ServerUtils.getRecipes();
+            Platform.runLater(() ->
+                    table.setItems(FXCollections.observableList(recipeList))
+            );
+        }).start();
+    }
+
+    /**
+     * Called automatically after the FXML has been loaded.
+     * Sets all TextFields to non-editable initially.
+     */
+
     @FXML
     public void initialize() {
         setEditable(false);
@@ -59,6 +78,19 @@ public class RecipeListCtrl {
                     }
                 }
         );
+        //option to delete a ingredient from the ui and the database using delete-key on keyboard
+        Listingredients.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.DELETE) {
+
+                IngredientUsage selectedItem = Listingredients
+                        .getSelectionModel()
+                        .getSelectedItem();
+
+                if (selectedItem != null) {
+                    deleteItem(selectedItem); // je bevestigings-popup
+                }
+            }
+        });
 
         // gets everything in a listview
         Listingredients.setCellFactory(lv -> new ListCell<>() {
@@ -71,19 +103,29 @@ public class RecipeListCtrl {
             }
         });
     }
-
     /**
-     * Helper method to load recipe table
-     * Makes use of getAll method from recipeController and sets items
+     * Gives a warning-popup when you want to delete a item from a recipe
+     * Deletes item in UI and in database (server)
+     *
+
      */
-    private void loadRecipeTable() {
-        new Thread(() -> {
-            List<Recipe> recipeList = ServerUtils.getRecipes();
-            Platform.runLater(() ->
-                    table.setItems(FXCollections.observableList(recipeList))
-            );
-        }).start();
+
+    private void deleteItem(IngredientUsage item) {
+
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete");
+        alert.setHeaderText("Delete one item");
+        alert.setContentText("Are you sure you want to delete this item?");
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                Listingredients.getItems().remove(item);
+                ServerUtils.deleteIngredientUsage(item.getId());
+            }
+        });
     }
+
 
     /**
      * Called when the user clicked on the recipe.

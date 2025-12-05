@@ -1,6 +1,5 @@
 package client;
 
-
 import client.scenes.AddRecipeCtrl;
 import client.scenes.MainCtrl;
 import client.scenes.RecipeListCtrl;

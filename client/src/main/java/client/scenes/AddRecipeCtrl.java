@@ -91,7 +91,4 @@ public class AddRecipeCtrl {
         });
         alert.showAndWait();
     }
-
-
-
 }
