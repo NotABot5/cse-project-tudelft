@@ -111,6 +111,8 @@ public class ServerUtils {
      * @return list of ingredient usages in recipe
      */
     public static List<IngredientUsage> fetchAllIngredientsInRecipe(long id) {
+        String url = SERVER + "api/ingredientUsage/" + id;
+        System.out.println("Calling: " + url);
         try (var client = ClientBuilder.newClient(new ClientConfig())) {
             return client.target(SERVER)
                     .path("api/ingredientUsage/" + id)

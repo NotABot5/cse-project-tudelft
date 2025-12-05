@@ -10,7 +10,7 @@ import server.services.IngredientUsageService;
 import java.util.List;
 import java.util.Objects;
 
-@Controller
+@RestController
 @RequestMapping("/api/ingredientUsage")
 public class IngredientUsageController {
     public final IngredientUsageRepository ingredientUsageRepository;
