@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 import server.Main;
+import server.database.IngredientNameChangeRepository;
 import server.database.IngredientRepository;
 import server.services.IngredientService;
 
@@ -23,12 +24,13 @@ class IngredientControllerTest {
 
     @Autowired
     private IngredientRepository tester;
+    private IngredientNameChangeRepository nameChangeTester;
 
     @BeforeEach
     public void setup() {
         ingredient = new Ingredient("Beef", 20, 10, 0);
         ingredientCopy = new Ingredient("Beef", 20, 10, 0);
-        ingredientController = new IngredientController(new IngredientService(tester));
+        ingredientController = new IngredientController(new IngredientService(tester, nameChangeTester));
         tester.save(ingredient);
     }
 

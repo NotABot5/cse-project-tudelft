@@ -109,4 +109,16 @@ public class IngredientController {
             ingredientService.changeProtein(id, updatedData);
         }
     }
+    /**
+     * Renames an ingredient with a new name
+     * @param id id of the ingredient to replace the old name in
+     * @param newName the new name to replace the old with
+     */
+    @PutMapping("/rename/{id}")
+    public void renameIngredient(@PathVariable("id") Long id,
+                                 @RequestBody String  newName) {
+        if (newName != null) {
+            ingredientService.renameIngredient(id, newName);
+        }
+    }
 }
