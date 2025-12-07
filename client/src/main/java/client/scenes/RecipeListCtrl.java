@@ -37,6 +37,10 @@ public class RecipeListCtrl {
     protected ListView<IngredientUsage> Listingredients;
     @FXML
     protected Button addButton;
+    @FXML
+    protected Label RecipeNameLabel;
+    @FXML
+    protected Label LanguageLabel;
 
     private MainCtrl pc;
 
@@ -263,5 +267,14 @@ public class RecipeListCtrl {
 
     public void addRecipeButton(){
         pc.ShowAddRecipe();
+    }
+
+    @FXML
+    protected void refreshData(MouseEvent event) {
+        table.getItems().clear();
+        loadRecipeTable();
+        Listingredients.getItems().clear();
+        RecipeNameLabel.setText("Nothing currently selected");
+        LanguageLabel.setText("Language: N/A");
     }
 }
