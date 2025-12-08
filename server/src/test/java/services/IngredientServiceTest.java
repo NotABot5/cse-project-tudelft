@@ -1,11 +1,13 @@
 package services;
 
+import commons.IngredientNameChange;
 import server.Main;
 import commons.Ingredient;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
+import server.database.IngredientNameChangeRepository;
 import server.database.IngredientRepository;
 import server.services.IngredientService;
 
@@ -22,10 +24,12 @@ public class IngredientServiceTest {
 
     @Autowired
     private IngredientRepository tester;
+    @Autowired
+    private IngredientNameChangeRepository nameChangeTester;
 
     @BeforeEach
     public void setup() {
-        ingredientService = new IngredientService(tester);
+        ingredientService = new IngredientService(tester, nameChangeTester);
         ingredient = new Ingredient("Beef", 20, 10, 0);
     }
 
@@ -72,6 +76,24 @@ public class IngredientServiceTest {
         ingredientService.changeName(ingredient.getId(), "Pork");
         Ingredient found = tester.findById(ingredient.getId()).get();
         assertEquals("Pork", found.getName());
+    }
+    @Test
+    public void changeNameChangeTest() {
+        ingredientService.addIngredient(ingredient);
+        ingredientService.renameIngredient(ingredient.getId(), "Chicken");
+        Ingredient found = tester.findById(ingredient.getId()).get();
+        assertEquals("Chicken", found.getName());
+    }
+    @Test
+    public void renameLogTest(){
+        ingredientService.addIngredient(ingredient);
+        ingredientService.renameIngredient(ingredient.getId(), "Chicken");
+       assertEquals (1, nameChangeTester.findAll().size());
+
+        IngredientNameChange log = nameChangeTester.findAll().get(0);
+        assertEquals("Beef", log.getOldName());
+        assertEquals("Chicken", log.getNewName());
+        assertEquals (ingredient.getId(), log.getIngredientId());
     }
 
     @Test

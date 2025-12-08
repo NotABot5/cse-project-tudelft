@@ -1,7 +1,9 @@
 package server.services;
 
 import commons.Ingredient;
+import commons.IngredientNameChange;
 import org.springframework.stereotype.Service;
+import server.database.IngredientNameChangeRepository;
 import server.database.IngredientRepository;
 
 import java.util.List;
@@ -10,9 +12,12 @@ import java.util.Optional;
 @Service
 public class IngredientService {
     public final IngredientRepository ingredientRepository;
+    public final IngredientNameChangeRepository nameChangeRepository;
 
-    public IngredientService(IngredientRepository ingredientRepository) {
+    public IngredientService(IngredientRepository ingredientRepository,
+                             IngredientNameChangeRepository nameChangeRepository) {
         this.ingredientRepository = ingredientRepository;
+        this.nameChangeRepository = nameChangeRepository;
     }
 
 
@@ -117,4 +122,21 @@ public class IngredientService {
         List<Ingredient> rawList = ingredientRepository.findAll();
         return(rawList.stream().sorted().toList());
     }
+    /**
+     * Changes the name of an Ingredient with a new one
+     * @param id the id of the ingredient
+     * @param newName the new name of the ingredient
+     */
+    public void renameIngredient(long id, String newName) {
+        Ingredient ingredient = ingredientRepository.findById(id).orElseThrow();
+
+        String oldName = ingredient.getName();
+
+        ingredient.setName(newName);
+
+        IngredientNameChange log =new IngredientNameChange( id,  oldName, newName);
+
+        nameChangeRepository.save(log);
+    }
 }
+
