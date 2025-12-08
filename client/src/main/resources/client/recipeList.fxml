@@ -12,54 +12,52 @@
 <?import javafx.scene.text.*?>
 
 <HBox prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.RecipeListCtrl">
->>>>>>> 57cfb97b1f954e6eae2d760adfbb56db1b51bfb9
-   <children>
-      <VBox prefHeight="400.0" prefWidth="345.0">
-
-                <TableView fx:id="table" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="320.0">
-              <columns>
-                  <TableColumn fx:id="idColumn" prefWidth="39.199981689453125" text="ID" />
-                  <TableColumn fx:id="nameColumn" prefWidth="179.199951171875" text="Name" />
-                  <TableColumn fx:id="languageColumn" prefWidth="107.20001220703125" text="Language" />
-              </columns>
-          </TableView>
-      </VBox>
-      <VBox>
-         <children>
-            <Label fx:id="RecipeNameLabel" text="Nothing currently selected">
-               <VBox.margin>
-                  <Insets bottom="1.0" left="5.0" right="10.0" top="5.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="LanguageLabel" text="Language: N/A">
-               <VBox.margin>
-                  <Insets bottom="8.0" left="5.0" />
-               </VBox.margin>
-            </Label>
-            <ListView fx:id="Listingredients" maxHeight="-Infinity" prefHeight="350.0" prefWidth="394.0" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#refreshData" prefHeight="30.0" prefWidth="66.0" text="Refresh">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="Add_Ingredients" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#AddnewIngredient" prefHeight="30.0" prefWidth="162.0" text="Add new Ingredients">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Button>
-                   <Button fx:id="addButton" layoutY="15.0" mnemonicParsing="false" onAction="#addRecipeButton" prefHeight="25.0" prefWidth="84.0" text="Add Recipe" />
-               </children>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </HBox>
->>>>>>> 57cfb97b1f954e6eae2d760adfbb56db1b51bfb9
-         </children>
-      </VBox>
-   </children>
+    <children>
+        <VBox prefHeight="400.0" prefWidth="345.0">
+            <TableView fx:id="table" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="320.0">
+                <columns>
+                    <TableColumn fx:id="idColumn" prefWidth="39.199981689453125" text="ID" />
+                    <TableColumn fx:id="nameColumn" prefWidth="179.199951171875" text="Name" />
+                    <TableColumn fx:id="languageColumn" prefWidth="107.20001220703125" text="Language" />
+                </columns>
+            </TableView>
+        </VBox>
+        <VBox>
+            <children>
+                <Label fx:id="RecipeNameLabel" text="Nothing currently selected">
+                    <VBox.margin>
+                        <Insets bottom="1.0" left="5.0" right="10.0" top="5.0" />
+                    </VBox.margin>
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+                <Label fx:id="LanguageLabel" text="Language: N/A">
+                    <VBox.margin>
+                        <Insets bottom="8.0" left="5.0" />
+                    </VBox.margin>
+                </Label>
+                <ListView fx:id="Listingredients" maxHeight="-Infinity" prefHeight="350.0" prefWidth="394.0" />
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#refreshData" prefHeight="30.0" prefWidth="66.0" text="Refresh">
+                            <HBox.margin>
+                                <Insets right="10.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="Add_Ingredients" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#AddnewIngredient" prefHeight="30.0" prefWidth="162.0" text="Add new Ingredients">
+                            <HBox.margin>
+                                <Insets />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="addButton" layoutY="15.0" mnemonicParsing="false" onAction="#addRecipeButton" prefHeight="25.0" prefWidth="84.0" text="Add Recipe" />
+                        <Button fx:id="cloneButton" layoutY="15.0" mnemonicParsing="false" onAction="#cloneRecipe" prefHeight="25.0" prefWidth="84.0" text="Clone" />
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
 </HBox>
