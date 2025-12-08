@@ -23,6 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.util.List;
+import java.util.Optional;
 
 public class RecipeListCtrl {
     @FXML
@@ -37,6 +38,8 @@ public class RecipeListCtrl {
     protected ListView<IngredientUsage> Listingredients;
     @FXML
     protected Button addButton;
+    @FXML
+    protected Button cloneButton;
     @FXML
     protected Label RecipeNameLabel;
     @FXML
@@ -276,5 +279,25 @@ public class RecipeListCtrl {
         Listingredients.getItems().clear();
         RecipeNameLabel.setText("Nothing currently selected");
         LanguageLabel.setText("Language: N/A");
+    }
+
+    @FXML
+    protected void cloneRecipe() {
+        Recipe selectedRecipe = table.getSelectionModel().getSelectedItem();
+        if (selectedRecipe == null) {
+            new Alert(Alert.AlertType.WARNING, "Select a recipe to clone!", ButtonType.OK).showAndWait();
+            return;
+        }
+
+        TextInputDialog dialog = new TextInputDialog("Cloned " + selectedRecipe.getName());
+        dialog.setTitle("Clone Recipe");
+        dialog.setHeaderText("Enter a new name for the cloned recipe");
+        dialog.setContentText("New name:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(newName -> {
+            ServerUtils.cloneRecipe(selectedRecipe.getId(), newName);
+            loadRecipeTable();
+        });
     }
 }

@@ -72,4 +72,21 @@ public class RecipeController {
         // Return the updated recipe and a "200 OK" status.
         return ResponseEntity.ok(saved);
     }
+
+    @PostMapping("/{id}/clone")
+    public ResponseEntity<Recipe> clone(@PathVariable("id") long id, @RequestBody String newName) {
+        if (id < 0 || !repo.existsById(id)) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (StringUtils.isEmpty(newName)) {
+            return ResponseEntity.badRequest().build();
+        }
+        return repo.findById(id)
+                .map(recipe -> {
+                    Recipe clone = new Recipe(newName, recipe.getLang(), recipe.getPreparation());
+                    Recipe saved = repo.save(clone);
+                    return ResponseEntity.ok(saved);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

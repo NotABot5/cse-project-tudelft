@@ -172,4 +172,18 @@ public class ServerUtils {
                     });
         }
     }
+
+    /**
+     * Clones a recipe
+     * @param id the id of the recipe to clone
+     * @param newName the new name for the cloned recipe
+     * @return the cloned recipe
+     */
+    public static Recipe cloneRecipe(long id, String newName) {
+        try (var client = ClientBuilder.newClient(new ClientConfig())) {
+            return client.target(SERVER).path("api/recipes/" + id + "/clone")
+                    .request(APPLICATION_JSON)
+                    .post(Entity.entity(newName, APPLICATION_JSON), Recipe.class);
+        }
+    }
 }

@@ -3,6 +3,8 @@ package server.services;
 import commons.Recipe;
 import org.springframework.stereotype.Service;
 import server.database.RecipeRepository;
+import io.micrometer.common.util.StringUtils;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,5 +134,21 @@ public class RecipeService {
      */
     public Optional<Recipe> fetchRecipeByID(long id) {
         return recipeRepository.findById(id);
+    }
+
+    /**
+     * Clones a recipe
+     * @param id the id of the recipe to clone
+     * @param newName the new name for the cloned recipe
+     * @return the cloned recipe
+     */
+    public Optional<Recipe> cloneRecipe(long id, String newName) {
+        if (StringUtils.isEmpty(newName)) {
+            return Optional.empty();
+        }
+        return recipeRepository.findById(id).map(recipe -> {
+            Recipe clone = new Recipe(newName, recipe.getLang(), recipe.getPreparation());
+            return recipeRepository.save(clone);
+        });
     }
 }
