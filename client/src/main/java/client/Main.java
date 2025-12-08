@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -16,6 +17,9 @@ public class Main extends Application {
     @FXML protected TextField fieldCarbs;
     @FXML protected TextField fieldProtein;
     @FXML protected ChoiceBox<Ingredient> ingredientChoiceBox;
+
+    @FXML protected Button refreshbutton;
+    @FXML protected Button downloadbutton;
 
 
 
@@ -116,5 +120,28 @@ public class Main extends Application {
         fieldFat.clear();
         fieldCarbs.clear();
         fieldProtein.clear();
+    }
+
+    /**
+     * Refetches all information
+     */
+    @FXML
+    public void onRefresh(){
+        refreshbutton.setDisable(true);
+        refreshbutton.setText("Refresh");
+
+        refreshbutton.setDisable(false);
+        System.out.println("Refreshed:");
+
+    }
+
+    /**
+     * Allow the user to download a recipe
+     */
+    @FXML
+    public void onDownload(){
+        downloadbutton.setDisable(true);
+        downloadbutton.setDisable(false);
+        System.out.println("Downloaded:");
     }
 }

@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<HBox prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.RecipeList">
+<HBox prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.RecipeListCtrl">
+>>>>>>> 57cfb97b1f954e6eae2d760adfbb56db1b51bfb9
    <children>
       <VBox prefHeight="400.0" prefWidth="345.0">
 
@@ -45,11 +52,13 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
+                   <Button fx:id="addButton" layoutY="15.0" mnemonicParsing="false" onAction="#addRecipeButton" prefHeight="25.0" prefWidth="84.0" text="Add Recipe" />
                </children>
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </HBox>
+>>>>>>> 57cfb97b1f954e6eae2d760adfbb56db1b51bfb9
          </children>
       </VBox>
    </children>

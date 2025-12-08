@@ -2,7 +2,6 @@ package server.api;
 
 import commons.IngredientUsage;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import server.database.IngredientUsageRepository;
 import server.services.IngredientUsageService;
@@ -10,7 +9,7 @@ import server.services.IngredientUsageService;
 import java.util.List;
 import java.util.Objects;
 
-@Controller
+@RestController
 @RequestMapping("/api/ingredientUsage")
 public class IngredientUsageController {
     public final IngredientUsageRepository ingredientUsageRepository;
