@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AddRecipeCtrl">
+   <children>
+      <Button fx:id="confirmButton" layoutX="480.0" layoutY="304.0" mnemonicParsing="false" onAction="#confirmClick" prefHeight="46.0" prefWidth="91.0" text="Add Recipe" />
+      <Button fx:id="cancelButton" layoutX="392.0" layoutY="304.0" mnemonicParsing="false" onAction="#cancelClick" prefHeight="46.0" prefWidth="69.0" text="Cancel" />
+      <TextField fx:id="recipeName" layoutX="65.0" layoutY="125.0" prefHeight="25.0" prefWidth="189.0" promptText="Type the name of the recipe here" />
+      <TextField fx:id="language" layoutX="65.0" layoutY="175.0" prefHeight="25.0" prefWidth="189.0" promptText="Type the language here" />
+      <Label fx:id="addText" layoutX="54.0" layoutY="43.0" text="Add Your Recipe">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>
