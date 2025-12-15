@@ -102,6 +102,7 @@ public class RecipeListCtrl {
         // gets everything in a listview
         Listingredients.setCellFactory(lv -> new ListCell<>() {
             protected void updateItem(IngredientUsage item, boolean empty) {
+                super.updateItem(item, empty);
                 if (item != null) {
                     setText(item.getIngredient().getName() + " - " + item.getAmount() + " " + item.getUnit());
                 } else {
@@ -148,8 +149,9 @@ public class RecipeListCtrl {
         List<IngredientUsage> ingredientsRecipe =
                 ServerUtils.fetchAllIngredientsInRecipe(recipe.getId());
 
-        Listingredients.getItems().clear();
-        Listingredients.getItems().addAll(ingredientsRecipe);
+        Listingredients.getItems().setAll(ingredientsRecipe);
+        RecipeNameLabel.setText(recipe.getName());
+        LanguageLabel.setText("Language: " + recipe.getLang());
     }
 
 
@@ -169,10 +171,7 @@ public class RecipeListCtrl {
 
     @FXML
     protected void AddnewIngredient(MouseEvent event) {
-
         Addingredient_popup();
-
-
     }
     //used https://codingtechroom.com/question/creating-popup-windows-in-javafx for some help of some things,
     //Maybe it can be done in FXML, but it was way more work like that and not less LoC
@@ -272,13 +271,17 @@ public class RecipeListCtrl {
         pc.ShowAddRecipe();
     }
 
-    @FXML
-    protected void refreshData(MouseEvent event) {
+    public void refreshAll() {
         table.getItems().clear();
         loadRecipeTable();
         Listingredients.getItems().clear();
         RecipeNameLabel.setText("Nothing currently selected");
         LanguageLabel.setText("Language: N/A");
+    }
+
+    @FXML
+    protected void refreshData(MouseEvent event) {
+        refreshAll();
     }
 
     @FXML
