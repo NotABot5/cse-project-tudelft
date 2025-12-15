@@ -46,7 +46,7 @@
                                 <Insets bottom="10.0" />
                             </HBox.margin>
                         </Button>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Delete ingredient">
+                  <Button mnemonicParsing="false" onAction="#deleteIngredientUsage" prefHeight="25.0" prefWidth="121.0" text="Delete ingredient">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin></Button>

@@ -318,4 +318,16 @@ public class RecipeListCtrl {
             loadRecipeTable();
         });
     }
+
+    @FXML
+    protected void deleteIngredientUsage() {
+        Recipe selectedRecipe = table.getSelectionModel().getSelectedItem();
+        IngredientUsage selectedIngredientUsage = Listingredients.getSelectionModel().getSelectedItem();
+        if (selectedIngredientUsage == null) {
+            new Alert(Alert.AlertType.WARNING, "Select an ingredient to delete!", ButtonType.OK).showAndWait();
+            return;
+        }
+        ServerUtils.deleteIngredientUsage(selectedIngredientUsage.getId());
+        Listingredients.getItems().setAll(ServerUtils.fetchAllIngredientsInRecipe(selectedRecipe.getId()));
+    }
 }
