@@ -192,7 +192,7 @@ public class RecipeListCtrl {
         }
 
         Stage popupStage = new Stage();
-        popupStage.setTitle("Add Ingredient Usage");
+        popupStage.setTitle("Add ingredient");
         popupStage.initModality(Modality.APPLICATION_MODAL);
 
         ChoiceBox<Ingredient> ingredientSelection = new ChoiceBox<>();
