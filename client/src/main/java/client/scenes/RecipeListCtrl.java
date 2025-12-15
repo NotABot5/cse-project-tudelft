@@ -249,7 +249,8 @@ public class RecipeListCtrl {
                 usage.setIngredient(savedIngredient);
                 usage.setRecipe(selectedRecipe);
                 usage.setAmount((int) amount);
-                usage.setUnit(unit);
+                //Should be changed to reflect new entity IngredientUnit
+                //usage.setUnit(unit);
 
                 IngredientUsage savedUsage = ServerUtils.addIngredientUsage(usage);
 

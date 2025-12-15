@@ -20,9 +20,12 @@ public class IngredientUsage {
     public int amount;
 
     //This may or may not be changed in the future to a different structure
-    public String unit;
+    public IngredientUnit unit;
 
-    public IngredientUsage(Recipe recipe, Ingredient ingredient, int amount, String unit)
+    //Convention: For informal units where the amount IS appropriate (e.g. 2 big handfuls), specify amount as usual
+    //  For informal units where the amount IS NOT appropriate (e.g. a pinch), specify amount to be 0
+
+    public IngredientUsage(Recipe recipe, Ingredient ingredient, int amount, IngredientUnit unit)
     {
         this.recipe = recipe;
         this.ingredient = ingredient;
@@ -55,11 +58,11 @@ public class IngredientUsage {
         this.amount = amount;
     }
 
-    public String getUnit() {
+    public IngredientUnit getUnit() {
         return unit;
     }
 
-    public void setUnit(String unit) {
+    public void setUnit(IngredientUnit unit) {
         this.unit = unit;
     }
 
@@ -85,4 +88,47 @@ public class IngredientUsage {
     public void setRecipe(Recipe selectedRecipe) {
         this.recipe = selectedRecipe;
     }
+
+    /**
+     * Determines the amount of ingredient needed, when converting to its basic unit
+     * @return the amount of ingredient needed after conversion
+     */
+    public int convertedAmount() {
+        if (getUnit().getFormal()) {
+            return (int) (getAmount() * getUnit().getConversionFactorToBase());
+        }
+        else{
+            return(0);
+        }
+    }
+
+    /**
+     * Shows amount of ingredient needed, when converting to its basic unit in a readable format
+     * @return
+     */
+    public String convertedAmountToString() {
+        int convertedAmount = convertedAmount();
+        StringBuilder res = new StringBuilder();
+        if (getAmount() != 0 && getUnit().getType() != UnitType.COUNT) {
+            res.append(convertedAmount);
+            res.append(" ");
+
+            if (getUnit().getType() == UnitType.MASS) {
+                res.append("grams");
+            } else if (getUnit().getType() == UnitType.VOLUME) {
+                res.append("milliliters");
+            }
+        }
+        if (!getUnit().getFormal()) {
+            res.append(getUnit().getName());
+        }
+        if (getUnit().getType() != UnitType.COUNT) {res.append(" of ");}
+        else {
+            res.append(getAmount());
+            res.append(" ");
+        }
+        res.append(getIngredient().getName());
+        return(res.toString());
+    }
+
 }

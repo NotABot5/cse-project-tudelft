@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class IngredientUsageServiceTest {
 
     private IngredientUsageService ingredientUsageService;
+    private IngredientUnit testUnit;
     private IngredientUsage ingredientUsage;
     @Autowired
     private IngredientUsageRepository tester;
@@ -29,11 +30,12 @@ public class IngredientUsageServiceTest {
     @BeforeEach
     public void setup() {
         ingredientUsageService = new IngredientUsageService(tester);
+        testUnit = new IngredientUnit("grams", UnitType.MASS, true, 1);
         Recipe recipe = new Recipe("Lasagna", "Dutch", new ArrayList<>());
         recipe = recipeRepository.save(recipe);
         Ingredient ingredient = new Ingredient("Tomato sauce", 0, 1, 2);
         ingredient = ingredientRepository.save(ingredient);
-        ingredientUsage = new IngredientUsage(recipe, ingredient, 500, "milliliters");
+        ingredientUsage = new IngredientUsage(recipe, ingredient, 500, testUnit);
     }
 
     @Test

@@ -1,8 +1,6 @@
 package server.api;
 
-import commons.Ingredient;
-import commons.IngredientUsage;
-import commons.Recipe;
+import commons.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = Main.class)
 class IngredientUsageControllerTest {
     private IngredientUsage testIngUsage;
+    private IngredientUnit testUnit;
     private Ingredient ing;
     private Recipe rec;
     private IngredientUsageController ingredientUsageController;
@@ -38,7 +37,8 @@ class IngredientUsageControllerTest {
     public void setup() {
         ing = new Ingredient("Beef", 20, 10, 0);
         rec = new Recipe("Test Recipe", "en", List.of("Step 1", "Step 2"));
-        testIngUsage = new IngredientUsage(rec, ing, 5, "g");
+        testUnit = new IngredientUnit("grams", UnitType.MASS, true, 1);
+        testIngUsage = new IngredientUsage(rec, ing, 5, testUnit);
         ingredientRepository.save(ing);
         recipeRepository.save(rec);
         tester.save(testIngUsage);
@@ -48,7 +48,7 @@ class IngredientUsageControllerTest {
                 new Recipe("Test Recipe", "en", List.of("Step 1", "Step 2")),
                 new Ingredient("Beef", 20, 10, 0),
                 5,
-                "g"
+                testUnit
         );
     }
 
@@ -78,7 +78,7 @@ class IngredientUsageControllerTest {
 
     @Test
     public void testDeleteIngredientUsage() {
-        IngredientUsage toDelete = new IngredientUsage(rec, ing, 5, "g");
+        IngredientUsage toDelete = new IngredientUsage(rec, ing, 5, testUnit);
         tester.save(toDelete);
         assertTrue(ingredientUsageController.deleteIngredientUsage(toDelete.getId()).getBody());
         assertEquals(List.of(testIngUsage), tester.findAll());
