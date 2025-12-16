@@ -25,7 +25,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -176,8 +175,8 @@ public class RecipeListCtrl {
 
 
     @FXML
-    protected void AddnewIngredient(MouseEvent event) {
-        Addingredient_popup();
+    protected void addNewIngredient(MouseEvent event) {
+        addIngredientPopup();
     }
     //used https://codingtechroom.com/question/creating-popup-windows-in-javafx for some help of some things,
     //Maybe it can be done in FXML, but it was way more work like that and not less LoC
@@ -187,7 +186,7 @@ public class RecipeListCtrl {
      * Opens a popup when a recipe is selected
      * Gives alerts when a wrong move is done
      */
-    private void Addingredient_popup() {
+    private void addIngredientPopup() {
         Recipe selectedRecipe = table.getSelectionModel().getSelectedItem();
         if (selectedRecipe == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Select a recipe first!", ButtonType.OK);
@@ -286,10 +285,16 @@ public class RecipeListCtrl {
         popupStage.showAndWait();
     }
 
+    /**
+     * Shows add recipe screen
+     */
     public void addRecipeButton(){
         pc.showAddRecipe();
     }
 
+    /**
+     * Refreshes all recipes and deselects current recipe
+     */
     public void refreshAll() {
         table.getItems().clear();
         loadRecipeTable();
@@ -298,11 +303,18 @@ public class RecipeListCtrl {
         languageLabel.setText("Language: N/A");
     }
 
+    /**
+     * Triggers a refresh of all recipes
+     * @param event mouse click event
+     */
     @FXML
     protected void refreshData(MouseEvent event) {
         refreshAll();
     }
 
+    /**
+     * Clones currently selected recipe
+     */
     @FXML
     protected void cloneRecipe() {
         Recipe selectedRecipe = table.getSelectionModel().getSelectedItem();
@@ -323,6 +335,9 @@ public class RecipeListCtrl {
         });
     }
 
+    /**
+     * Deletes currently selected ingredient usage
+     */
     @FXML
     protected void deleteIngredientUsage() {
         Recipe selectedRecipe = table.getSelectionModel().getSelectedItem();
@@ -335,11 +350,17 @@ public class RecipeListCtrl {
         listIngredients.getItems().setAll(ServerUtils.fetchAllIngredientsInRecipe(selectedRecipe.getId()));
     }
 
+    /**
+     * Opens ingredient editing
+     */
     @FXML
     protected void editIngredients() {
         pc.showIngredientList();
     }
 
+    /**
+     * Downloads currently selected recipe
+     */
     @FXML
     protected void downloadRecipe() {
         Recipe selectedRecipe = table.getSelectionModel().getSelectedItem();

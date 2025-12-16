@@ -41,7 +41,7 @@
                </VBox.margin></Label>
                 <HBox prefHeight="34.0" prefWidth="406.0">
                     <children>
-                        <Button fx:id="Add_Ingredients" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#AddnewIngredient" prefHeight="30.0" prefWidth="114.0" text="Add ingredient">
+                        <Button fx:id="Add_Ingredients" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#addNewIngredient" prefHeight="30.0" prefWidth="114.0" text="Add ingredient">
                             <HBox.margin>
                                 <Insets bottom="10.0" />
                             </HBox.margin>
