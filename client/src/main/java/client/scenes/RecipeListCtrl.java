@@ -22,6 +22,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -35,15 +37,15 @@ public class RecipeListCtrl {
     @FXML
     protected TableColumn<Recipe, String> languageColumn;
     @FXML
-    protected ListView<IngredientUsage> Listingredients;
+    protected ListView<IngredientUsage> listIngredients;
     @FXML
     protected Button addButton;
     @FXML
     protected Button cloneButton;
     @FXML
-    protected Label RecipeNameLabel;
+    protected Label recipeNameLabel;
     @FXML
-    protected Label LanguageLabel;
+    protected Label languageLabel;
 
     private MainCtrl pc;
 
@@ -86,10 +88,10 @@ public class RecipeListCtrl {
                 }
         );
         //option to delete a ingredient from the ui and the database using delete-key on keyboard
-        Listingredients.setOnKeyPressed(event -> {
+        listIngredients.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.DELETE) {
 
-                IngredientUsage selectedItem = Listingredients
+                IngredientUsage selectedItem = listIngredients
                         .getSelectionModel()
                         .getSelectedItem();
 
@@ -100,8 +102,9 @@ public class RecipeListCtrl {
         });
 
         // gets everything in a listview
-        Listingredients.setCellFactory(lv -> new ListCell<>() {
+        listIngredients.setCellFactory(lv -> new ListCell<>() {
             protected void updateItem(IngredientUsage item, boolean empty) {
+                super.updateItem(item, empty);
                 if (item != null) {
                     setText(item.getIngredient().getName() + " - " + item.getAmount() + " " + item.getUnit());
                 } else {
@@ -127,7 +130,7 @@ public class RecipeListCtrl {
 
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                Listingredients.getItems().remove(item);
+                listIngredients.getItems().remove(item);
                 ServerUtils.deleteIngredientUsage(item.getId());
             }
         });
@@ -148,8 +151,9 @@ public class RecipeListCtrl {
         List<IngredientUsage> ingredientsRecipe =
                 ServerUtils.fetchAllIngredientsInRecipe(recipe.getId());
 
-        Listingredients.getItems().clear();
-        Listingredients.getItems().addAll(ingredientsRecipe);
+        listIngredients.getItems().setAll(ingredientsRecipe);
+        recipeNameLabel.setText(recipe.getName());
+        languageLabel.setText("Language: " + recipe.getLang());
     }
 
 
@@ -169,10 +173,7 @@ public class RecipeListCtrl {
 
     @FXML
     protected void AddnewIngredient(MouseEvent event) {
-
         Addingredient_popup();
-
-
     }
     //used https://codingtechroom.com/question/creating-popup-windows-in-javafx for some help of some things,
     //Maybe it can be done in FXML, but it was way more work like that and not less LoC
@@ -191,11 +192,29 @@ public class RecipeListCtrl {
         }
 
         Stage popupStage = new Stage();
-        popupStage.setTitle("Add Ingredient Usage");
+        popupStage.setTitle("Add ingredient");
         popupStage.initModality(Modality.APPLICATION_MODAL);
 
-        TextField ingredientNameField = new TextField();
-        ingredientNameField.setPromptText("Ingredient Name");
+        ChoiceBox<Ingredient> ingredientSelection = new ChoiceBox<>();
+        List<Ingredient> ingredients = ServerUtils.getIngredients();
+        ingredientSelection.setConverter(new StringConverter<Ingredient>() {
+            @Override
+            public String toString(Ingredient ingredient) {
+                if(ingredient == null) {
+                    return "Select ingredient";
+                }
+                return ingredient.getName();
+            }
+
+            @Override
+            public Ingredient fromString(String s) {
+                return ingredients.stream()
+                        .filter((Ingredient ing) -> ing.getName().equals(s))
+                        .findFirst()
+                        .orElse(null);
+            }
+        });
+        ingredientSelection.getItems().setAll(ingredients);
 
         TextField amountField = new TextField();
         amountField.setPromptText("Amount");
@@ -212,7 +231,7 @@ public class RecipeListCtrl {
         grid.setPadding(new Insets(10));
 
         grid.add(new Label("Ingredient Name:"), 0, 0);
-        grid.add(ingredientNameField, 1, 0);
+        grid.add(ingredientSelection, 1, 0);
         grid.add(new Label("Amount:"), 0, 1);
         grid.add(amountField, 1, 1);
         grid.add(new Label("Unit:"), 0, 2);
@@ -222,11 +241,11 @@ public class RecipeListCtrl {
         grid.add(buttonBox, 1, 3);
 
         addButton.setOnAction(e -> {
-            String name = ingredientNameField.getText().trim();
+            Ingredient selectedIngredient = ingredientSelection.getValue();
             String amountText = amountField.getText().trim();
             String unit = unitField.getText().trim();
 
-            if (name.isEmpty() || amountText.isEmpty() || unit.isEmpty()) {
+            if (selectedIngredient == null || amountText.isEmpty() || unit.isEmpty()) {
                 new Alert(Alert.AlertType.WARNING, "All fields must be filled!", ButtonType.OK).showAndWait();
                 return;
             }
@@ -240,20 +259,15 @@ public class RecipeListCtrl {
             }
             //to send everything to the server
             try {
-                Ingredient ingredient = new Ingredient();
-                ingredient.setName(name);
-
-                Ingredient savedIngredient = ServerUtils.addIngredient(ingredient);
-
                 IngredientUsage usage = new IngredientUsage();
-                usage.setIngredient(savedIngredient);
+                usage.setIngredient(selectedIngredient);
                 usage.setRecipe(selectedRecipe);
                 usage.setAmount((int) amount);
                 usage.setUnit(unit);
 
                 IngredientUsage savedUsage = ServerUtils.addIngredientUsage(usage);
 
-                Listingredients.getItems().add(savedUsage);
+                listIngredients.getItems().add(savedUsage);
                 popupStage.close();
 
             } catch (Exception ex) {
@@ -269,16 +283,20 @@ public class RecipeListCtrl {
     }
 
     public void addRecipeButton(){
-        pc.ShowAddRecipe();
+        pc.showAddRecipe();
+    }
+
+    public void refreshAll() {
+        table.getItems().clear();
+        loadRecipeTable();
+        listIngredients.getItems().clear();
+        recipeNameLabel.setText("Nothing currently selected");
+        languageLabel.setText("Language: N/A");
     }
 
     @FXML
     protected void refreshData(MouseEvent event) {
-        table.getItems().clear();
-        loadRecipeTable();
-        Listingredients.getItems().clear();
-        RecipeNameLabel.setText("Nothing currently selected");
-        LanguageLabel.setText("Language: N/A");
+        refreshAll();
     }
 
     @FXML
@@ -299,5 +317,22 @@ public class RecipeListCtrl {
             ServerUtils.cloneRecipe(selectedRecipe.getId(), newName);
             loadRecipeTable();
         });
+    }
+
+    @FXML
+    protected void deleteIngredientUsage() {
+        Recipe selectedRecipe = table.getSelectionModel().getSelectedItem();
+        IngredientUsage selectedIngredientUsage = listIngredients.getSelectionModel().getSelectedItem();
+        if (selectedIngredientUsage == null) {
+            new Alert(Alert.AlertType.WARNING, "Select an ingredient to delete!", ButtonType.OK).showAndWait();
+            return;
+        }
+        ServerUtils.deleteIngredientUsage(selectedIngredientUsage.getId());
+        listIngredients.getItems().setAll(ServerUtils.fetchAllIngredientsInRecipe(selectedRecipe.getId()));
+    }
+
+    @FXML
+    protected void editIngredients() {
+        pc.showIngredientList();
     }
 }

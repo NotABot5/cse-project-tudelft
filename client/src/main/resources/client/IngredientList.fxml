@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="400.0" prefWidth="600.0"
-      xmlns="http://javafx.com/javafx/25"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="client.IngredientList">
+<VBox prefHeight="392.0" prefWidth="662.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.IngredientListCtrl">
 
-    <TableView fx:id="table" prefHeight="400" prefWidth="600">
+    <TableView fx:id="table" prefHeight="400" prefWidth="611.0">
         <columns>
-            <TableColumn fx:id="idColumn" text="ID" prefWidth="60"/>
-            <TableColumn fx:id="nameColumn" text="Name" prefWidth="180"/>
-            <TableColumn fx:id="proteinColumn" text="Protein" prefWidth="100"/>
-            <TableColumn fx:id="carbsColumn" text="Carbs" prefWidth="100"/>
-            <TableColumn fx:id="fatColumn" text="Fat" prefWidth="100"/>
-            <TableColumn fx:id="caloriesColumn" text="Calories" prefWidth="120"/>
+            <TableColumn fx:id="idColumn" prefWidth="60" text="ID" />
+            <TableColumn fx:id="nameColumn" prefWidth="180" text="Name" />
+            <TableColumn fx:id="proteinColumn" prefWidth="100" text="Protein" />
+            <TableColumn fx:id="carbsColumn" prefWidth="100" text="Carbs" />
+            <TableColumn fx:id="fatColumn" prefWidth="100" text="Fat" />
+            <TableColumn fx:id="caloriesColumn" prefWidth="120" text="Calories" />
         </columns>
     </TableView>
+   <HBox prefHeight="100.0" prefWidth="200.0">
+      <children>
+         <Button mnemonicParsing="false" onAction="#exitIngredients" text="Exit ingredient view">
+            <HBox.margin>
+               <Insets left="10.0" top="10.0" />
+            </HBox.margin>
+         </Button>
+      </children>
+   </HBox>
 </VBox>

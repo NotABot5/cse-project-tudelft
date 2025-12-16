@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<HBox prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.RecipeListCtrl">
+<HBox prefHeight="497.0" prefWidth="771.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.RecipeListCtrl">
     <children>
-        <VBox prefHeight="400.0" prefWidth="345.0">
-            <TableView fx:id="table" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="320.0">
+        <VBox prefHeight="497.0" prefWidth="356.0">
+            <TableView fx:id="table" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="497.0" prefWidth="330.0">
                 <columns>
                     <TableColumn fx:id="idColumn" prefWidth="39.199981689453125" text="ID" />
                     <TableColumn fx:id="nameColumn" prefWidth="179.199951171875" text="Name" />
@@ -22,9 +16,9 @@
                 </columns>
             </TableView>
         </VBox>
-        <VBox>
+        <VBox prefHeight="497.0" prefWidth="457.0">
             <children>
-                <Label fx:id="RecipeNameLabel" text="Nothing currently selected">
+                <Label fx:id="recipeNameLabel" text="Nothing currently selected">
                     <VBox.margin>
                         <Insets bottom="1.0" left="5.0" right="10.0" top="5.0" />
                     </VBox.margin>
@@ -32,32 +26,69 @@
                         <Font size="20.0" />
                     </font>
                 </Label>
-                <Label fx:id="LanguageLabel" text="Language: N/A">
+                <Label fx:id="languageLabel" text="Language: N/A">
                     <VBox.margin>
                         <Insets bottom="8.0" left="5.0" />
                     </VBox.margin>
                 </Label>
-                <ListView fx:id="Listingredients" maxHeight="-Infinity" prefHeight="350.0" prefWidth="394.0" />
-                <HBox prefHeight="100.0" prefWidth="200.0">
+                <ListView fx:id="listIngredients" maxHeight="-Infinity" prefHeight="290.0" prefWidth="413.0">
+               <padding>
+                  <Insets right="10.0" />
+               </padding></ListView>
+            <Label prefHeight="23.0" prefWidth="168.0" text="Current recipe modification">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></Label>
+                <HBox prefHeight="34.0" prefWidth="406.0">
                     <children>
+                        <Button fx:id="Add_Ingredients" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#AddnewIngredient" prefHeight="30.0" prefWidth="114.0" text="Add ingredient">
+                            <HBox.margin>
+                                <Insets bottom="10.0" />
+                            </HBox.margin>
+                        </Button>
+                  <Button mnemonicParsing="false" onAction="#deleteIngredientUsage" prefHeight="25.0" prefWidth="121.0" text="Delete ingredient">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin></Button>
+                        <Button fx:id="cloneButton" layoutY="15.0" mnemonicParsing="false" onAction="#cloneRecipe" prefHeight="25.0" prefWidth="65.0" text="Clone">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin></Button>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+            <Label layoutX="10.0" layoutY="370.0" text="Main controls">
+               <VBox.margin>
+                  <Insets bottom="6.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+            <HBox prefHeight="31.0" prefWidth="406.0">
+               <children>
                         <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#refreshData" prefHeight="30.0" prefWidth="66.0" text="Refresh">
                             <HBox.margin>
                                 <Insets right="10.0" />
                             </HBox.margin>
                         </Button>
-                        <Button fx:id="Add_Ingredients" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#AddnewIngredient" prefHeight="30.0" prefWidth="162.0" text="Add new Ingredients">
-                            <HBox.margin>
-                                <Insets />
-                            </HBox.margin>
-                        </Button>
-                        <Button fx:id="addButton" layoutY="15.0" mnemonicParsing="false" onAction="#addRecipeButton" prefHeight="25.0" prefWidth="84.0" text="Add Recipe" />
-                        <Button fx:id="cloneButton" layoutY="15.0" mnemonicParsing="false" onAction="#cloneRecipe" prefHeight="25.0" prefWidth="84.0" text="Clone" />
-                    </children>
-                    <VBox.margin>
-                        <Insets top="10.0" />
-                    </VBox.margin>
-                </HBox>
+                        <Button fx:id="addButton" mnemonicParsing="false" onAction="#addRecipeButton" prefHeight="25.0" prefWidth="84.0" text="Add recipe" />
+                  <Button mnemonicParsing="false" onAction="#editIngredients" prefHeight="25.0" prefWidth="149.0" text="Edit preset ingredients">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </HBox>
             </children>
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+         <padding>
+            <Insets right="10.0" />
+         </padding>
         </VBox>
     </children>
 </HBox>
