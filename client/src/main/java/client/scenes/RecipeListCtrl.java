@@ -20,10 +20,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -334,5 +338,29 @@ public class RecipeListCtrl {
     @FXML
     protected void editIngredients() {
         pc.showIngredientList();
+    }
+
+    @FXML
+    protected void downloadRecipe() {
+        Recipe selectedRecipe = table.getSelectionModel().getSelectedItem();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select where to download recipe");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text (.txt)", "*.txt"));
+        String recipeText = selectedRecipe.getName() + "\nLanguage: " + selectedRecipe.getLang() + "\n\nIngredients:";
+        List<IngredientUsage> ingredientsInRecipe = ServerUtils.fetchAllIngredientsInRecipe(selectedRecipe.getId());
+        for(IngredientUsage ingredient : ingredientsInRecipe) {
+            recipeText += "\n" + ingredient.getAmount() + " " + ingredient.getUnit() + " - "
+                    + ingredient.getIngredient().getName();
+        }
+        recipeText += "\n\nPreparation steps:";
+        for(String step : selectedRecipe.getPreparation()) {
+            recipeText += "\n - " + step;
+        }
+        try (FileWriter fw = new FileWriter(pc.getUserSelectedFile(fileChooser))) {
+            fw.write(recipeText);
+        } catch (IOException e) {
+            new Alert(Alert.AlertType.WARNING, "Something went wrong when downloading!", ButtonType.OK)
+                    .showAndWait();
+        }
     }
 }

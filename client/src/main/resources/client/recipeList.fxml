@@ -54,6 +54,11 @@
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin></Button>
+                  <Button mnemonicParsing="false" onAction="#downloadRecipe" text="Download">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
                     </children>
                     <VBox.margin>
                         <Insets top="5.0" />
