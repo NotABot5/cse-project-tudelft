@@ -18,7 +18,7 @@
         </VBox>
         <VBox prefHeight="497.0" prefWidth="457.0">
             <children>
-                <Label fx:id="RecipeNameLabel" text="Nothing currently selected">
+                <Label fx:id="recipeNameLabel" text="Nothing currently selected">
                     <VBox.margin>
                         <Insets bottom="1.0" left="5.0" right="10.0" top="5.0" />
                     </VBox.margin>
@@ -26,12 +26,12 @@
                         <Font size="20.0" />
                     </font>
                 </Label>
-                <Label fx:id="LanguageLabel" text="Language: N/A">
+                <Label fx:id="languageLabel" text="Language: N/A">
                     <VBox.margin>
                         <Insets bottom="8.0" left="5.0" />
                     </VBox.margin>
                 </Label>
-                <ListView fx:id="Listingredients" maxHeight="-Infinity" prefHeight="290.0" prefWidth="413.0">
+                <ListView fx:id="listIngredients" maxHeight="-Infinity" prefHeight="290.0" prefWidth="413.0">
                <padding>
                   <Insets right="10.0" />
                </padding></ListView>
@@ -72,7 +72,7 @@
                             </HBox.margin>
                         </Button>
                         <Button fx:id="addButton" mnemonicParsing="false" onAction="#addRecipeButton" prefHeight="25.0" prefWidth="84.0" text="Add recipe" />
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Edit preset ingredients">
+                  <Button mnemonicParsing="false" onAction="#editIngredients" prefHeight="25.0" prefWidth="149.0" text="Edit preset ingredients">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>

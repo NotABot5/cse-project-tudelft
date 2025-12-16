@@ -1,6 +1,7 @@
 package client;
 
 import client.scenes.AddRecipeCtrl;
+import client.scenes.IngredientListCtrl;
 import client.scenes.MainCtrl;
 import client.scenes.RecipeListCtrl;
 import com.google.inject.Guice;
@@ -29,8 +30,9 @@ public class RecipeList extends Application {
     public void start(Stage primaryStage) throws Exception {
         var recipeList = FXML.load(RecipeListCtrl.class, "client", "recipeList.fxml");
         var addRecipe = FXML.load(AddRecipeCtrl.class, "client", "addRecipe.fxml");
+        var ingredientList = FXML.load(IngredientListCtrl.class, "client", "IngredientList.fxml");
         var pc = INJECTOR.getInstance(MainCtrl.class);
-        pc.initialize(primaryStage, recipeList, addRecipe);
+        pc.initialize(primaryStage, ingredientList, recipeList, addRecipe);
     }
 }
 

@@ -37,15 +37,15 @@ public class RecipeListCtrl {
     @FXML
     protected TableColumn<Recipe, String> languageColumn;
     @FXML
-    protected ListView<IngredientUsage> Listingredients;
+    protected ListView<IngredientUsage> listIngredients;
     @FXML
     protected Button addButton;
     @FXML
     protected Button cloneButton;
     @FXML
-    protected Label RecipeNameLabel;
+    protected Label recipeNameLabel;
     @FXML
-    protected Label LanguageLabel;
+    protected Label languageLabel;
 
     private MainCtrl pc;
 
@@ -88,10 +88,10 @@ public class RecipeListCtrl {
                 }
         );
         //option to delete a ingredient from the ui and the database using delete-key on keyboard
-        Listingredients.setOnKeyPressed(event -> {
+        listIngredients.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.DELETE) {
 
-                IngredientUsage selectedItem = Listingredients
+                IngredientUsage selectedItem = listIngredients
                         .getSelectionModel()
                         .getSelectedItem();
 
@@ -102,7 +102,7 @@ public class RecipeListCtrl {
         });
 
         // gets everything in a listview
-        Listingredients.setCellFactory(lv -> new ListCell<>() {
+        listIngredients.setCellFactory(lv -> new ListCell<>() {
             protected void updateItem(IngredientUsage item, boolean empty) {
                 super.updateItem(item, empty);
                 if (item != null) {
@@ -130,7 +130,7 @@ public class RecipeListCtrl {
 
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                Listingredients.getItems().remove(item);
+                listIngredients.getItems().remove(item);
                 ServerUtils.deleteIngredientUsage(item.getId());
             }
         });
@@ -151,9 +151,9 @@ public class RecipeListCtrl {
         List<IngredientUsage> ingredientsRecipe =
                 ServerUtils.fetchAllIngredientsInRecipe(recipe.getId());
 
-        Listingredients.getItems().setAll(ingredientsRecipe);
-        RecipeNameLabel.setText(recipe.getName());
-        LanguageLabel.setText("Language: " + recipe.getLang());
+        listIngredients.getItems().setAll(ingredientsRecipe);
+        recipeNameLabel.setText(recipe.getName());
+        languageLabel.setText("Language: " + recipe.getLang());
     }
 
 
@@ -267,7 +267,7 @@ public class RecipeListCtrl {
 
                 IngredientUsage savedUsage = ServerUtils.addIngredientUsage(usage);
 
-                Listingredients.getItems().add(savedUsage);
+                listIngredients.getItems().add(savedUsage);
                 popupStage.close();
 
             } catch (Exception ex) {
@@ -283,15 +283,15 @@ public class RecipeListCtrl {
     }
 
     public void addRecipeButton(){
-        pc.ShowAddRecipe();
+        pc.showAddRecipe();
     }
 
     public void refreshAll() {
         table.getItems().clear();
         loadRecipeTable();
-        Listingredients.getItems().clear();
-        RecipeNameLabel.setText("Nothing currently selected");
-        LanguageLabel.setText("Language: N/A");
+        listIngredients.getItems().clear();
+        recipeNameLabel.setText("Nothing currently selected");
+        languageLabel.setText("Language: N/A");
     }
 
     @FXML
@@ -322,12 +322,17 @@ public class RecipeListCtrl {
     @FXML
     protected void deleteIngredientUsage() {
         Recipe selectedRecipe = table.getSelectionModel().getSelectedItem();
-        IngredientUsage selectedIngredientUsage = Listingredients.getSelectionModel().getSelectedItem();
+        IngredientUsage selectedIngredientUsage = listIngredients.getSelectionModel().getSelectedItem();
         if (selectedIngredientUsage == null) {
             new Alert(Alert.AlertType.WARNING, "Select an ingredient to delete!", ButtonType.OK).showAndWait();
             return;
         }
         ServerUtils.deleteIngredientUsage(selectedIngredientUsage.getId());
-        Listingredients.getItems().setAll(ServerUtils.fetchAllIngredientsInRecipe(selectedRecipe.getId()));
+        listIngredients.getItems().setAll(ServerUtils.fetchAllIngredientsInRecipe(selectedRecipe.getId()));
+    }
+
+    @FXML
+    protected void editIngredients() {
+        pc.showIngredientList();
     }
 }
