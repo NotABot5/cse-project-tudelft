@@ -20,10 +20,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -172,8 +175,8 @@ public class RecipeListCtrl {
 
 
     @FXML
-    protected void AddnewIngredient(MouseEvent event) {
-        Addingredient_popup();
+    protected void addNewIngredient(MouseEvent event) {
+        addIngredientPopup();
     }
     //used https://codingtechroom.com/question/creating-popup-windows-in-javafx for some help of some things,
     //Maybe it can be done in FXML, but it was way more work like that and not less LoC
@@ -183,7 +186,7 @@ public class RecipeListCtrl {
      * Opens a popup when a recipe is selected
      * Gives alerts when a wrong move is done
      */
-    private void Addingredient_popup() {
+    private void addIngredientPopup() {
         Recipe selectedRecipe = table.getSelectionModel().getSelectedItem();
         if (selectedRecipe == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Select a recipe first!", ButtonType.OK);
@@ -282,10 +285,16 @@ public class RecipeListCtrl {
         popupStage.showAndWait();
     }
 
+    /**
+     * Shows add recipe screen
+     */
     public void addRecipeButton(){
         pc.showAddRecipe();
     }
 
+    /**
+     * Refreshes all recipes and deselects current recipe
+     */
     public void refreshAll() {
         table.getItems().clear();
         loadRecipeTable();
@@ -294,11 +303,18 @@ public class RecipeListCtrl {
         languageLabel.setText("Language: N/A");
     }
 
+    /**
+     * Triggers a refresh of all recipes
+     * @param event mouse click event
+     */
     @FXML
     protected void refreshData(MouseEvent event) {
         refreshAll();
     }
 
+    /**
+     * Clones currently selected recipe
+     */
     @FXML
     protected void cloneRecipe() {
         Recipe selectedRecipe = table.getSelectionModel().getSelectedItem();
@@ -319,6 +335,9 @@ public class RecipeListCtrl {
         });
     }
 
+    /**
+     * Deletes currently selected ingredient usage
+     */
     @FXML
     protected void deleteIngredientUsage() {
         Recipe selectedRecipe = table.getSelectionModel().getSelectedItem();
@@ -331,8 +350,38 @@ public class RecipeListCtrl {
         listIngredients.getItems().setAll(ServerUtils.fetchAllIngredientsInRecipe(selectedRecipe.getId()));
     }
 
+    /**
+     * Opens ingredient editing
+     */
     @FXML
     protected void editIngredients() {
         pc.showIngredientList();
+    }
+
+    /**
+     * Downloads currently selected recipe
+     */
+    @FXML
+    protected void downloadRecipe() {
+        Recipe selectedRecipe = table.getSelectionModel().getSelectedItem();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select where to download recipe");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text (.txt)", "*.txt"));
+        String recipeText = selectedRecipe.getName() + "\nLanguage: " + selectedRecipe.getLang() + "\n\nIngredients:";
+        List<IngredientUsage> ingredientsInRecipe = ServerUtils.fetchAllIngredientsInRecipe(selectedRecipe.getId());
+        for(IngredientUsage ingredient : ingredientsInRecipe) {
+            recipeText += "\n" + ingredient.getAmount() + " " + ingredient.getUnit() + " - "
+                    + ingredient.getIngredient().getName();
+        }
+        recipeText += "\n\nPreparation steps:";
+        for(String step : selectedRecipe.getPreparation()) {
+            recipeText += "\n - " + step;
+        }
+        try (FileWriter fw = new FileWriter(pc.getUserSelectedFile(fileChooser))) {
+            fw.write(recipeText);
+        } catch (IOException e) {
+            new Alert(Alert.AlertType.WARNING, "Something went wrong when downloading!", ButtonType.OK)
+                    .showAndWait();
+        }
     }
 }
