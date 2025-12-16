@@ -186,4 +186,18 @@ public class ServerUtils {
                     .post(Entity.entity(newName, APPLICATION_JSON), Recipe.class);
         }
     }
+
+    /**
+     * Fetches all ingredient usages in all recipes
+     * @return list of all ingredient usages in database
+     */
+    public static List<IngredientUsage> fetchAllIngredientUsages() {
+        try (var client = ClientBuilder.newClient(new ClientConfig())) {
+            return client.target(SERVER)
+                    .path("/api/ingredientUsage")
+                    .request(APPLICATION_JSON)
+                    .get(new GenericType<>() {
+                    });
+        }
+    }
 }

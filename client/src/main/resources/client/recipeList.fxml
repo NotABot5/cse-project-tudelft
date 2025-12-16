@@ -8,6 +8,19 @@
 <HBox prefHeight="497.0" prefWidth="771.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.RecipeListCtrl">
     <children>
         <VBox prefHeight="497.0" prefWidth="356.0">
+         <HBox alignment="CENTER" prefWidth="200.0">
+            <children>
+               <Label text="Search: ">
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets>
+                  <HBox.margin>
+                     <Insets left="10.0" right="5.0" />
+                  </HBox.margin>
+               </Label>
+               <TextField fx:id="searchField" onKeyTyped="#search" prefWidth="273.0" promptText="Enter the search term here" />
+            </children>
+         </HBox>
             <TableView fx:id="table" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="497.0" prefWidth="330.0">
                 <columns>
                     <TableColumn fx:id="idColumn" prefWidth="39.199981689453125" text="ID" />

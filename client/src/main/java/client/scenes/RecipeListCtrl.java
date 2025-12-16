@@ -28,6 +28,7 @@ import javafx.util.StringConverter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class RecipeListCtrl {
@@ -49,7 +50,11 @@ public class RecipeListCtrl {
     protected Label recipeNameLabel;
     @FXML
     protected Label languageLabel;
+    @FXML
+    protected TextField searchField;
 
+    private List<Recipe> loadedRecipeList;
+    private List<IngredientUsage> ingredientUsageList;
     private MainCtrl pc;
 
     @Inject
@@ -62,10 +67,11 @@ public class RecipeListCtrl {
      * Makes use of getAll method from recipeController and sets items
      */
     private void loadRecipeTable() {
+        ingredientUsageList = ServerUtils.fetchAllIngredientUsages();
         new Thread(() -> {
-            List<Recipe> recipeList = ServerUtils.getRecipes();
+            loadedRecipeList = ServerUtils.getRecipes();
             Platform.runLater(() ->
-                    table.setItems(FXCollections.observableList(recipeList))
+                    table.setItems(FXCollections.observableList(loadedRecipeList))
             );
         }).start();
     }
@@ -383,5 +389,41 @@ public class RecipeListCtrl {
             new Alert(Alert.AlertType.WARNING, "Something went wrong when downloading!", ButtonType.OK)
                     .showAndWait();
         }
+    }
+
+    @FXML
+    protected void search() {
+        //at some point we need to bring down the time complexity of this, it's one of the most horribly unoptimised
+        //pieces of code I've probably ever written
+        String[] searchTerm = searchField.getText().split(" ");
+        table.setItems(FXCollections.observableList(loadedRecipeList.stream().filter(
+                (Recipe rec) -> {
+                    for (String phrase : searchTerm) {
+                        boolean wasFound = false;
+                        if (rec.getName().contains(phrase)) {
+                            wasFound = true;
+                        }
+                        for (IngredientUsage ingredientUsage : ingredientUsageList) {
+                            if (Objects.equals(ingredientUsage.getRecipe().getId(), rec.getId())
+                                    && ingredientUsage.getIngredient().getName().contains(phrase)) {
+                                wasFound = true;
+                                break;
+                            }
+                        }
+                        List<String> preparationSteps = rec.getPreparation();
+                        for (String step : preparationSteps) {
+                            if (step.contains(phrase)) {
+                                wasFound = true;
+                                break;
+                            }
+                        }
+                        if(!wasFound) { return false; }
+                    }
+                    return true;
+                }
+        ).toList()));
+        listIngredients.getItems().clear();
+        recipeNameLabel.setText("Nothing currently selected");
+        languageLabel.setText("Language: N/A");
     }
 }
