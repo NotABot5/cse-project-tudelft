@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -84,6 +85,11 @@ public class RecipeListCtrl {
     @FXML
     public void initialize() {
         setEditable(false);
+        searchField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+            if(event.getCode() == KeyCode.ESCAPE) {
+                searchField.setText("");
+            }
+        });
         idColumn.setCellValueFactory(cell -> new SimpleLongProperty(cell.getValue().getId()).asObject());
         nameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName()));
         languageColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getLang()));
@@ -391,6 +397,9 @@ public class RecipeListCtrl {
         }
     }
 
+    /**
+     * Filters recipes based on search term in searchField
+     */
     @FXML
     protected void search() {
         //at some point we need to bring down the time complexity of this, it's one of the most horribly unoptimised
