@@ -54,7 +54,7 @@ public class AddRecipeCtrl {
         try{
             server.addRecipe(recipe);
             showAlert("Success", "Recipe added successfully!", Alert.AlertType.INFORMATION);
-            pc.ShowList();
+            pc.showList();
             clearFields();
         } catch (Exception e){
             showAlert("Error", "Failed to add Recipe: " + e.getMessage(), Alert.AlertType.ERROR);
@@ -63,7 +63,7 @@ public class AddRecipeCtrl {
 
     public void cancelClick(){
         clearFields();
-        pc.ShowList();
+        pc.showList();
     }
 
     public void clearFields(){
