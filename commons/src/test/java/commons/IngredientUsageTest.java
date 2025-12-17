@@ -13,6 +13,7 @@ class IngredientUsageTest {
     private IngredientUnit testUnit;
     private IngredientUnit testUnitInformal;
     private IngredientUsage testIngredientUsage;
+    private IngredientUsage testIngredientUsageInformal;
     private IngredientUsage testIngredientUsageEqual;
     private IngredientUsage testIngredientUsageNotEqual;
 
@@ -23,6 +24,7 @@ class IngredientUsageTest {
         testUnit = new IngredientUnit("kilograms", UnitType.MASS, true, 1000);
         testUnitInformal = new IngredientUnit("A pinch", UnitType.MASS, false, 0);
         testIngredientUsage = new IngredientUsage(testRecipe, testIngredient, 5, testUnit);
+        testIngredientUsageInformal = new IngredientUsage(testRecipe, testIngredient, 3, testUnitInformal);
         testIngredientUsageEqual = new IngredientUsage(testRecipe, testIngredient, 5, testUnit);
         testIngredientUsageNotEqual = new IngredientUsage(testRecipe, testIngredient, 10, testUnit);
     }
@@ -51,14 +53,14 @@ class IngredientUsageTest {
 
     @Test
     void testConversion() {
-        int expected = 5000;
+        double expected = 5000.0;
         assertEquals(expected, testIngredientUsage.convertedAmount());
     }
 
     @Test
     void testConvertedToStringFormal() {
         String expected = "5000 grams of test";
-        assertEquals(expected, testIngredientUsage.convertedAmountToString());
+        assertEquals(expected, testIngredientUsage.convertedToString());
     }
 
     @Test
@@ -66,13 +68,34 @@ class IngredientUsageTest {
         testIngredientUsage.setUnit(testUnitInformal);
         testIngredientUsage.setAmount(0);
         String expected = "A pinch of test";
-        assertEquals(expected, testIngredientUsage.convertedAmountToString());
+        assertEquals(expected, testIngredientUsage.convertedToString());
     }
 
     @Test
     void testConvertedToStringCount() {
         testIngredientUsage.setUnit(new IngredientUnit("", UnitType.COUNT, true, 1));
         String expected = "5 test";
-        assertEquals(expected, testIngredientUsage.convertedAmountToString());
+        assertEquals(expected, testIngredientUsage.convertedToString());
+    }
+
+    @Test
+    void testNewConvertedStringInvalid() {
+        String expected = "Unknown quantity of test";
+        assertEquals(expected,testIngredientUsageInformal.convertedToString(testUnit));
+    }
+
+    @Test
+    void testNewConvertedStringValid() {
+        IngredientUnit testUnitTemp = new IngredientUnit("pounds", UnitType.MASS, true, 500);
+        String expected = "10 pounds of test";
+        assertEquals(expected, testIngredientUsage.convertedToString(testUnitTemp));
+    }
+
+    @Test
+    void testNewConvertedStringCount() {
+        IngredientUnit testUnitTemp = new IngredientUnit("", UnitType.COUNT, true, 1);
+        String expected = "5 test";
+        testIngredientUsage.setUnit(testUnitTemp);
+        assertEquals(expected, testIngredientUsage.convertedToString(testUnitTemp));
     }
 }

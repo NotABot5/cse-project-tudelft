@@ -2,9 +2,7 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
-import commons.Ingredient;
-import commons.IngredientUsage;
-import commons.Recipe;
+import commons.*;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -103,7 +101,7 @@ public class RecipeListCtrl {
         Listingredients.setCellFactory(lv -> new ListCell<>() {
             protected void updateItem(IngredientUsage item, boolean empty) {
                 if (item != null) {
-                    setText(item.getIngredient().getName() + " - " + item.getAmount() + " " + item.getUnit());
+                    setText(item.convertedToStringStandard());
                 } else {
                     setText("");
                 }
@@ -249,8 +247,8 @@ public class RecipeListCtrl {
                 usage.setIngredient(savedIngredient);
                 usage.setRecipe(selectedRecipe);
                 usage.setAmount((int) amount);
-                //Should be changed to reflect new entity IngredientUnit
-                //usage.setUnit(unit);
+                //Should be changed according to user-specified unit, placeholder for now
+                usage.setUnit(new IngredientUnit(unit, UnitType.COUNT, true, 1));
 
                 IngredientUsage savedUsage = ServerUtils.addIngredientUsage(usage);
 
