@@ -191,4 +191,22 @@ public class IngredientUsage {
         res.append(getIngredient().getName());
         return(res.toString());
     }
+
+    public String convertedToStringStandard() {
+        if (!getUnit().getFormal()) {
+            return(convertedToString());
+        }
+        else {
+            switch (getUnit().getType()) {
+                case MASS:
+                    return(convertedToString(new IngredientUnit("grams", UnitType.MASS, true, 1)));
+                case VOLUME:
+                    return(convertedToString(new IngredientUnit("milliliters", UnitType.VOLUME, true, 1)));
+                case COUNT:
+                    return(convertedToString(new IngredientUnit("", UnitType.COUNT, true, 1)));
+                default:
+                    return(convertedToString());
+            }
+        }
+    }
 }
